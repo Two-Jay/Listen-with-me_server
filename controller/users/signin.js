@@ -1,3 +1,11 @@
+import dotenv from 'dotenv';
+import path from 'path';
+import { Token } from 'graphql';
+dotenv.config({ path: path.join(__dirname, '../../.env') });
+let tokenExpireTime = process.env.NODE_ENV === 'production' ? '6h' : '5m';
+// 개발환경에 따른 토큰 expiretime 설정
+
+const jwt = require('jsonwebtoken');
 // const { user } = require("../../models");
 // model definition 이전에 작업하여 해당 라인을 주석처리 함
 
@@ -17,13 +25,21 @@ module.exports = {
         if (result === null) {
           res.status(404).send('signin fail, invalid user data');
         } else {
-          sess.userid = result.id;
+          let token = jwt.sign(
+            {
+              email: email,
+              nickname: result.nickname,
+              profileURL: result.profileURL,
+              profileDescription: result.profileDescription,
+            },
+            JWT_secret,
+            {
+              expriesIn: tokenExpireTime,
+            }
+          );
 
-          res.status(200).json({
-            email: result.email,
-            nickname: result.nickname,
-            profileURL: result.profileURL,
-            profileDescription: result.profileDescription,
+          res.status(200).cookie('user', Token).json({
+            token: token,
           });
         }
       })
