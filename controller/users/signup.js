@@ -1,20 +1,21 @@
 // const { user } = require("../../models");
 // model definition 이전에 작업하여 해당 라인을 주석처리 함
 
-const { emailValidation } = require('.');
-
 module.exports = {
   post: (req, res) => {
     const { email, password, nickname } = req.body;
 
     if (email === null || email === '') {
-      return res.status(400).send('signup fail, invalid user data');
+      res.status(400).send('signup fail, invalid user data');
+      return;
     }
     if (password === null || password === '') {
-      return res.status(400).send('signup fail, invalid user data');
+      res.status(400).send('signup fail, invalid user data');
+      return;
     }
     if (nickname === null || nickname === '') {
-      return res.status(400).send('signup fail, invalid user data');
+      res.status(400).send('signup fail, invalid user data');
+      return;
     }
 
     users
@@ -29,9 +30,10 @@ module.exports = {
       })
       .then(async ([user, created]) => {
         if (!created) {
-          return res.status(409).send('signup fail, already exist user');
+          res.status(409).send('signup fail, already exist user');
+          return;
         }
-        return res.status(200).send('signup success');
+        res.status(200).send('signup success');
       });
   },
 };
