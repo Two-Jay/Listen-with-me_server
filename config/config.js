@@ -14,7 +14,7 @@ module.exports = {
   test: {
     username: 'root' || process.env.RDS_USERNAME,
     password: null || process.env.RDS_PASSWORD,
-    database: 'database_development',
+    database: 'database_test',
     host: 'localhost' || process.env.RDS_HOSTNAME,
     port: 3306 || process.env.RDS_PORT,
     dialect: 'mysql',
@@ -22,7 +22,7 @@ module.exports = {
   production: {
     username: 'root' || process.env.RDS_USERNAME,
     password: null || process.env.RDS_PASSWORD,
-    database: 'database_development',
+    database: 'database_production',
     host: 'localhost' || process.env.RDS_HOSTNAME,
     port: 3306 || process.env.RDS_PORT,
     dialect: 'mysql',
