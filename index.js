@@ -1,4 +1,5 @@
 const express = require('express');
+const mysql = require('mysql');
 
 const usersRouter = require('./routes/users');
 // 임시로 유저 스프린트 2에서 필요한 users.js 라우트만 설정
