@@ -1,4 +1,4 @@
-const { models } = require('../models');
+const { models } = require("../../../models");
 const users = models.User;
 
 module.exports = {
