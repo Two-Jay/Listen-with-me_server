@@ -1,10 +1,11 @@
-const { models } = require("../../models");
+const { models } = require("../../../models");
+const jwt = require("jsonwebtoken");
 const users = models.User;
 
 module.exports = {
   patch: (req, res) => {
-    let sess = req.session;
-    if (sess.userid) {
+    let token = req.cookies.user;
+    jwt.verify(token, JWT_secret, (err, decoded) => {
       users
         .findOne({ where: { nickname: req.body.nickname } })
         .then((data) => {
@@ -17,7 +18,7 @@ module.exports = {
               .update(
                 { nickname: req.body.nickname },
                 {
-                  where: { id: sess.userid },
+                  where: { id: decoded.userid },
                 }
               )
               .then(() =>
@@ -35,6 +36,6 @@ module.exports = {
             .status(500)
             .send({ message: "nickname update fail, server error" })
         );
-    }
+    });
   },
 };
