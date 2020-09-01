@@ -22,7 +22,7 @@ module.exports = {
       })
       .then((result) => {
         if (result === null) {
-          res.status(404).send('signin fail, invalid user data');
+          res.status(404).send({ message: 'signin fail, invalid user data' });
         } else {
           let token = jwt.sign(
             {
@@ -43,7 +43,7 @@ module.exports = {
         }
       })
       .catch((err) => {
-        res.status(404).send('signin fail, server error');
+        res.status(404).send({ message: 'signin fail, server error' });
       });
   },
 };

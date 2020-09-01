@@ -13,17 +13,17 @@ module.exports = {
             }
         }).then((result) => {
             if(result){
-              res.status(409).send("unavailable email, already exist email");
+              res.status(409).send({ message : "unavailable email, already exist email"});
               return;                
             } else {
-              res.status(200).send("available email");
+              res.status(200).send({ message : "available email"});
               return;
             }
         }).catch(
-            res.status(500).send("unavailable email, server error")
+            res.status(500).send({ message : "unavailable email, server error"})
         )
       } else {
-        res.status(400).send("unavailable email, wrong address")
+        res.status(400).send({ message : "unavailable email, wrong address"})
         return;
       }
     }
