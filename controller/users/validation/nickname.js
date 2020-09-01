@@ -1,4 +1,4 @@
-const { models } = require("../../models");
+const { models } = require('../../models');
 const users = models.User;
 
 module.exports = {
@@ -10,7 +10,7 @@ module.exports = {
         .then((data) => {
           if (data) {
             res.status(409).send({
-              message: "unavailable nickname, already exists nickname",
+              message: 'unavailable nickname, already exists nickname',
             });
           } else {
             users
@@ -21,19 +21,19 @@ module.exports = {
                 }
               )
               .then(() =>
-                res.status(200).send({ message: "nickname update success" })
+                res.status(200).send({ message: 'nickname update success' })
               )
               .catch(() =>
                 res
                   .status(500)
-                  .send({ message: "nickname update fail, server error" })
+                  .send({ message: 'nickname update fail, server error' })
               );
           }
         })
         .catch(() =>
           res
             .status(500)
-            .send({ message: "nickname update fail, server error" })
+            .send({ message: 'nickname update fail, server error' })
         );
     }
   },
