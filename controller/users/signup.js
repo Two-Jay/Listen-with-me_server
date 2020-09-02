@@ -1,5 +1,4 @@
-const { models } = require("../../../models");
-const users = models.User;
+const users = require('../../models').User;
 
 module.exports = {
   post: (req, res) => {
@@ -19,7 +18,7 @@ module.exports = {
     }
 
     users
-      .fineOrCreate({
+      .findOrCreate({
         where: {
           email: email,
         },
