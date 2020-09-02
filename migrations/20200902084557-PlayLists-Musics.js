@@ -8,10 +8,10 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    await queryInterface.addConstraint("PlayListMusics", {
+    await queryInterface.addConstraint("Musics", {
       fields: ["playlist_id"],
       type: "foreign key",
-      name: "playlist_musics_foreign_key",
+      name: "musics_foreign_key",
       references: {
         table: "PlayLists",
         field: "id",
@@ -26,9 +26,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.removeConstraint(
-      "PlayListMusics",
-      "playlist_musics_foreign_key"
-    );
+    await queryInterface.removeConstraint("Musics", "musics_foreign_key");
   },
 };
