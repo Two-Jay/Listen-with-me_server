@@ -3,7 +3,8 @@ const multerS3 = require('multer-s3');
 const path = require('path');
 const AWS = require('aws-sdk');
 
-AWS.config.loadFromPath(__dirname + '/../config/aws-config.js');
+// AWS.config.loadFromPath(__dirname + '/../config/aws-config.js');
+AWS.config.loadFromPath(__dirname + '/../config/aws-config.json');
 
 module.exports = {
   upload: multer({
