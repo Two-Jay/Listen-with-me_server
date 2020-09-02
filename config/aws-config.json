@@ -1,5 +1,0 @@
-{
-  "accessKeyId": "process.env.S3_IMAGEBUCKET_ACCESSKEY",
-  "secretAccessKey": "process.env.S3_IMAGEBUCKET_SECRETKEY",
-  "region": "'ap-northeast-2'"
-}
