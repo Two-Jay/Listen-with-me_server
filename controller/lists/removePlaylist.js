@@ -10,7 +10,7 @@ module.exports = {
           .send({ message: "removePlaylist fail, need Authentication" });
       } else {
         playlist
-          .destroy({ where: { id: req.body.id } })
+          .destroy({ where: { id: req.query.id } })
           .then(() =>
             res.status(204).send({ message: "removePlaylist success" })
           )
