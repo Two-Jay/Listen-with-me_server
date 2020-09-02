@@ -8,6 +8,9 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      playlist_id: {
+        type: Sequelize.INTEGER,
+      },
       title: {
         type: Sequelize.STRING,
       },
