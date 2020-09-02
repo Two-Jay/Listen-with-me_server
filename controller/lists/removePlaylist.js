@@ -1,5 +1,6 @@
 const playlist = require("../../../models").PlayList;
-
+const music = require("../../../models").Music;
+const jwt = require("jsonwebtoken");
 module.exports = {
   post: (req, res) => {
     let token = req.cookies.user;
@@ -11,6 +12,7 @@ module.exports = {
       } else {
         playlist
           .destroy({ where: { id: req.query.id } })
+          .then(() => music.destroy({ where: { playlist_id: req.query.id } }))
           .then(() =>
             res.status(204).send({ message: "removePlaylist success" })
           )
