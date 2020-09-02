@@ -5,7 +5,7 @@ dotenv.config(path.join(__dirname, '../.env'));
 module.exports = {
   development: {
     username: 'root' || process.env.RDS_USERNAME,
-    password: 'Dkfkq201031=' || process.env.RDS_PASSWORD,
+    password: 'null' || process.env.RDS_PASSWORD,
     database: 'database_development',
     host: 'localhost' || process.env.RDS_HOSTNAME,
     port: 3306 || process.env.RDS_PORT,
