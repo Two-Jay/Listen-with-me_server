@@ -1,6 +1,7 @@
 const playlist = require("../../../models").PlayList;
 const acc = require("../../../models").AccumulateAudience;
 const liked = require("../../../models").likedList;
+const music = require("../../../models").Music;
 const jwt = require("jsonwebtoken");
 module.exports = {
   get: (req, res) => {
@@ -15,6 +16,9 @@ module.exports = {
           })
           .then((data) => {
             for (let i in data) {
+              data[i]["thumbnail"] = music.findOne({
+                where: { playlist_id: data[i]["id"] },
+              }).thumbnails;
               data[i]["likeAmount"] = liked.count({
                 where: { likedList_id: data[i]["id"] },
               });
@@ -26,12 +30,14 @@ module.exports = {
           .then((data) => {
             let payload = [];
             for (let j in data) {
-              let tmpObj = {};
-              tmpObj.id = data[j].id;
-              tmpObj.title = data[j].title;
-              tmpObj.user_id = data[j].owner_id;
-              tmpObj.likeAmount = data[j].likeAmount;
-              tmpObj.audienceAmount = data[j].audienceAmount;
+              let tmpObj = {
+                id: data[j].id,
+                title: data[j].title,
+                thumbnail: data[j].thumbnail,
+                user_id: data[j].owner_id,
+                likeAmount: data[j].likeAmount,
+                audienceAmount: data[j].audienceAmount,
+              };
               payload.push(tmpObj);
             }
             res.status(200).send(payload);
