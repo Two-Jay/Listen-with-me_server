@@ -1,30 +1,30 @@
-const dotenv = require('dotenv');
-const path = require('path');
-dotenv.config(path.join(__dirname, '../.env'));
+const dotenv = require("dotenv");
+const path = require("path");
+dotenv.config(path.join(__dirname, "../.env"));
 
 module.exports = {
   development: {
-    username: 'root' || process.env.RDS_USERNAME,
-    password: 'null' || process.env.RDS_PASSWORD,
-    database: 'database_development',
-    host: 'localhost' || process.env.RDS_HOSTNAME,
+    username: process.env.RDS_USERNAME,
+    password: process.env.RDS_PASSWORD,
+    database: "database_development",
+    host: process.env.RDS_HOSTNAME,
     port: 3306 || process.env.RDS_PORT,
-    dialect: 'mysql',
+    dialect: "mysql",
   },
   test: {
-    username: 'root' || process.env.RDS_USERNAME,
-    password: null || process.env.RDS_PASSWORD,
-    database: 'database_test',
-    host: 'localhost' || process.env.RDS_HOSTNAME,
+    username: process.env.RDS_USERNAME,
+    password: process.env.RDS_PASSWORD,
+    database: "database_test",
+    host: process.env.RDS_HOSTNAME,
     port: 3306 || process.env.RDS_PORT,
-    dialect: 'mysql',
+    dialect: "mysql",
   },
   production: {
-    username: 'root' || process.env.RDS_USERNAME,
-    password: null || process.env.RDS_PASSWORD,
-    database: 'database_production',
-    host: 'localhost' || process.env.RDS_HOSTNAME,
+    username: process.env.RDS_USERNAME,
+    password: process.env.RDS_PASSWORD,
+    database: "database_production",
+    host: process.env.RDS_HOSTNAME,
     port: 3306 || process.env.RDS_PORT,
-    dialect: 'mysql',
+    dialect: "mysql",
   },
 };
