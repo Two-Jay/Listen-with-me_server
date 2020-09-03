@@ -1,7 +1,8 @@
 const playlist = require("../../../models").PlayList;
-const acc = require("../../../models").AccumulateAudience;
 const liked = require("../../../models").likedList;
 const music = require("../../../models").Music;
+const room = require("../../../models").Room;
+const users = require("../../../models").User;
 const jwt = require("jsonwebtoken");
 module.exports = {
   get: (req, res) => {
@@ -11,15 +12,18 @@ module.exports = {
         .findAll()
         .then((data) => {
           for (let i in data) {
+            data[i]["room_id"] = room.findOne({
+              where: { playlist_id: data[i]["id"] },
+            }).id;
             data[i]["thumbnail"] = music.findOne({
               where: { playlist_id: data[i]["id"] },
             }).thumbnails;
             data[i]["likeAmount"] = liked.count({
               where: { likedList_id: data[i]["id"] },
             });
-            data[i]["audienceAmount"] = acc.count({
-              where: { playlist_id: data[i]["id"] },
-            });
+            data[i]["nickname"] = users.findOne({
+              where: { id: data[i]["owner_id"] },
+            }).nickname;
           }
         })
         .then((data) => {
@@ -27,11 +31,11 @@ module.exports = {
           for (let j in data) {
             let tmpObj = {
               id: data[j].id,
+              room_id: data[j].room_id,
+              thumbnails: data[j].thumbnail,
               title: data[j].title,
-              thumbnail: data[j].thumbnail,
-              user_id: data[j].owner_id,
+              nickname: data[j].nickname,
               likeAmount: data[j].likeAmount,
-              audienceAmount: data[j].audienceAmount,
             };
             payload.push(tmpObj);
           }
