@@ -1,10 +1,14 @@
 const express = require('express');
-const usersRouter = require('./routes/users');
+const app = express();
 
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const app = express();
+const dotenv = require('dotenv');
+dotenv.config();
+
+const usersRouter = require('./routes/users');
+
 const port = 4000;
 
 app.get('/', (req, res) => {
