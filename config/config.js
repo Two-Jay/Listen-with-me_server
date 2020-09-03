@@ -1,3 +1,9 @@
+console.log(
+  process.env.RDS_USERNAME,
+  process.env.RDS_PASSWORD,
+  process.env.RDS_HOSTNAME
+);
+
 module.exports = {
   development: {
     username: process.env.RDS_USERNAME,
