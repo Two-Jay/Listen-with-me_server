@@ -38,7 +38,7 @@ module.exports = {
         }
       })
       .catch((err) => {
-        res.status(404).send({ message: 'signin fail, server error' });
+        res.status(500).send({ message: 'signin fail, server error' });
       });
   },
 };

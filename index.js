@@ -11,6 +11,18 @@ const usersRouter = require('./routes/users');
 
 const port = 4000;
 
+// DB sync check
+const models = require('./models/index.js');
+models.sequelize
+  .sync()
+  .then(() => {
+    console.log('DB connection success');
+  })
+  .catch((err) => {
+    console.log('**DB connection fail**');
+    console.log(err);
+  });
+
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
