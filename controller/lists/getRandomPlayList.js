@@ -3,12 +3,13 @@ const liked = require("../../../models").likedList;
 const music = require("../../../models").Music;
 const users = require("../../../models").User;
 const jwt = require("jsonwebtoken");
+const sequelize = require("sequelize");
 module.exports = {
   get: (req, res) => {
     let token = req.cookies.user;
     jwt.verify(token, JWT_secret, () => {
       playlist
-        .findOne()
+        .findOne({ order: sequelize.random() })
         .then((data) => {
           data.thumbnail = music.findOne({
             where: { playlist_id: data["id"] },
