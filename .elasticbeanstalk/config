@@ -1,0 +1,5 @@
+[global]
+ApplicationName=ListenWithMe
+EnvironmentName=ListenWithMe-env
+Region=ap-northeast-2
+AwsCredentialFile=/home/two-jay/.elasticbeanstalk/aws_credential_file

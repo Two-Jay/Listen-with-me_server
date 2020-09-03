@@ -1,7 +1,3 @@
-const dotenv = require('dotenv');
-const path = require('path');
-const Token = require('jsonwebtoken');
-dotenv.config({ path: path.join(__dirname, '../../.env') });
 let tokenExpireTime = process.env.NODE_ENV === 'production' ? '1h' : '5m';
 // 개발환경에 따른 토큰 expiretime 설정
 
@@ -25,20 +21,20 @@ module.exports = {
             {
               userid: result.id,
             },
-            JWT_secret,
+            process.env.JWT_secret,
             {
               expriesIn: tokenExpireTime,
             }
           );
 
-          res.status(200).cookie('user', token).send({
+          res.status(200).cookie('authorization', token).send({
             email: email,
             nickname: result.nickname,
             profileURL: result.profileURL,
             profileDescription: result.profileDescription,
           });
         } else {
-          res.status(404).send('signin fail, invalid user data');
+          res.status(404).send({ message: 'signin fail, invalid user data' });
         }
       })
       .catch((err) => {
