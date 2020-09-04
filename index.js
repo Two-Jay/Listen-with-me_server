@@ -8,6 +8,8 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const usersRouter = require('./routes/users');
+const playlistRouter = require('./routes/playlists');
+const rootRouter = require('./routes/root');
 
 const port = 4000;
 
@@ -31,7 +33,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(morgan('dev'));
+app.use('/', rootRouter);
 app.use('/user', usersRouter);
+app.use('/playlist', playlistRouter);
+
 app.use(cookieParser());
 
 app.listen(port, () => {

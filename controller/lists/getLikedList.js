@@ -1,8 +1,8 @@
-const playlist = require("../../../models").PlayList;
-const acc = require("../../../models").AccumulateAudience;
-const liked = require("../../../models").likedList;
-const music = require("../../../models").Music;
-const jwt = require("jsonwebtoken");
+const playlist = require('../../../models').PlayList;
+const acc = require('../../../models').AccumulateAudience;
+const liked = require('../../../models').likedList;
+const music = require('../../../models').Music;
+const jwt = require('jsonwebtoken');
 module.exports = {
   get: (req, res) => {
     let token = req.cookies.authorization;
@@ -10,28 +10,28 @@ module.exports = {
       if (err) {
         res
           .status(404)
-          .send({ message: "likedList Loading fail, invalid userid" });
+          .send({ message: 'likedList Loading fail, invalid userid' });
       } else {
         playlist
           .findAll({
             include: [
               {
                 model: likedList,
-                attributes: ["user_id", "likedList_id"],
+                attributes: ['user_id', 'likedList_id'],
               },
             ],
             where: { user_id: decoded.userid },
           })
           .then((data) => {
             for (let i in data) {
-              data[i]["thumbnail"] = music.findOne({
-                where: { playlist_id: data[i]["id"] },
+              data[i]['thumbnail'] = music.findOne({
+                where: { playlist_id: data[i]['id'] },
               }).thumbnails;
-              data[i]["likeAmount"] = liked.count({
-                where: { likedList_id: data[i]["id"] },
+              data[i]['likeAmount'] = liked.count({
+                where: { likedList_id: data[i]['id'] },
               });
-              data[i]["audienceAmount"] = acc.count({
-                where: { playlist_id: data[i]["id"] },
+              data[i]['audienceAmount'] = acc.count({
+                where: { playlist_id: data[i]['id'] },
               });
             }
           })
@@ -53,7 +53,7 @@ module.exports = {
           .catch(() =>
             res
               .status(500)
-              .send({ message: "likedList Loading fail, server error" })
+              .send({ message: 'likedList Loading fail, server error' })
           );
       }
     });
