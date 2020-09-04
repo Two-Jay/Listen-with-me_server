@@ -2,7 +2,7 @@ const rooms = require("../../../models").Room;
 const jwt = require("jsonwebtoken");
 
 module.exports = {
-  patch: (req, res) => {
+  post: (req, res) => {
     let token = req.cookies.authorization;
     jwt.verify(token, process.env.JWT_secret, (err, decoded) => {
       rooms
