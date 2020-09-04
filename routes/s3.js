@@ -3,6 +3,10 @@ const multerS3 = require('multer-s3');
 const path = require('path');
 const AWS = require('aws-sdk');
 
+console.log(
+  process.env.S3_IMAGEBUCKET_ACCESSKEY,
+  process.env.S3_IMAGEBUCKET_SECRETKEY
+);
 AWS.config = new AWS.Config();
 AWS.config.accessKeyId = process.env.S3_IMAGEBUCKET_ACCESSKEY;
 AWS.config.secretAccessKey = process.env.S3_IMAGEBUCKET_SECRETKEY;
