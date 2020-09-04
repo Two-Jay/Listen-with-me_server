@@ -1,9 +1,9 @@
-const playlist = require("../../../models").PlayList;
-const liked = require("../../../models").likedList;
-const music = require("../../../models").Music;
-const users = require("../../../models").User;
-const jwt = require("jsonwebtoken");
-const sequelize = require("sequelize");
+const playlist = require('../../../models').PlayList;
+const liked = require('../../../models').likedList;
+const music = require('../../../models').Music;
+const users = require('../../../models').User;
+const jwt = require('jsonwebtoken');
+const sequelize = require('sequelize');
 module.exports = {
   get: (req, res) => {
     let token = req.cookies.authorization;
@@ -12,13 +12,13 @@ module.exports = {
         .findOne({ order: sequelize.random() })
         .then((data) => {
           data.thumbnail = music.findOne({
-            where: { playlist_id: data["id"] },
+            where: { playlist_id: data['id'] },
           }).thumbnails;
           data.likeAmount = liked.count({
-            where: { likedList_id: data["id"] },
+            where: { likedList_id: data['id'] },
           });
           data.nickname = users.findOne({
-            where: { id: data["owner_id"] },
+            where: { id: data['owner_id'] },
           }).nickname;
         })
         .then((data) => {
@@ -32,7 +32,7 @@ module.exports = {
           res.status(200).send(payload);
         })
         .catch(() =>
-          res.status(500).send({ message: "random loading fail, server error" })
+          res.status(500).send({ message: 'random loading fail, server error' })
         );
     });
   },
