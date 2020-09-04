@@ -1,22 +1,28 @@
-const playlist = require('../../../models').PlayList;
-const liked = require('../../../models').likedList;
-const music = require('../../../models').Music;
-const room = require('../../../models').Room;
-const users = require('../../../models').User;
-const jwt = require('jsonwebtoken');
+const playlist = require("../../../models").PlayList;
+const liked = require("../../../models").likedList;
+const music = require("../../../models").Music;
+const users = require("../../../models").User;
+const jwt = require("jsonwebtoken");
+
 module.exports = {
   get: (req, res) => {
     let token = req.cookies.authorization;
-    jwt.verify(token, JWT_secret, () => {
+    jwt.verify(token, process.env.JWT_secret, () => {
       playlist
-        .findAll()
+        .findAll({
+          include: [
+            {
+              model: Room,
+              attribues: [["id", "room_id"], "playlist_id"],
+              required: true,
+            },
+          ],
+          limit: req.query.limit,
+        })
         .then((data) => {
           for (let i in data) {
-            data[i]['room_id'] = room.findOne({
-              where: { playlist_id: data[i]['id'] },
-            }).id;
-            data[i]['thumbnail'] = music.findOne({
-              where: { playlist_id: data[i]['id'] },
+            data[i]["thumbnail"] = music.findOne({
+              where: { playlist_id: data[i]["id"] },
             }).thumbnails;
             data[i]['likeAmount'] = liked.count({
               where: { likedList_id: data[i]['id'] },

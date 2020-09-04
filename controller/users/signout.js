@@ -10,7 +10,7 @@ module.exports = {
         res
           .status(204)
           .clearCookie(authorization)
-          .send({ message: 'signout success' });
+          .send({ message: "signout success" });
       }
     });
   },
