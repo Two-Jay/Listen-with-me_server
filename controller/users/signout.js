@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 
 module.exports = {
   get: (req, res) => {
-    let token = req.cookies.user;
+    let token = req.cookies.authorization;
     jwt.verify(token, JWT_secret, (err) => {
       if (err) {
         res.status(500).send({ message: "signout fail, server error" });

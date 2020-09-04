@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const sequelize = require("sequelize");
 module.exports = {
   get: (req, res) => {
-    let token = req.cookies.user;
+    let token = req.cookies.authorization;
     jwt.verify(token, JWT_secret, () => {
       playlist
         .findOne({ order: sequelize.random() })

@@ -2,7 +2,7 @@ const playlist = require("../../../models").PlayList;
 
 module.exports = {
   post: (req, res) => {
-    let token = req.cookies.user;
+    let token = req.cookies.authorization;
     jwt.verify(token, JWT_secret, (err) => {
       if (err) {
         res

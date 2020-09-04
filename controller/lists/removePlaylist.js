@@ -3,7 +3,7 @@ const music = require("../../../models").Music;
 const jwt = require("jsonwebtoken");
 module.exports = {
   post: (req, res) => {
-    let token = req.cookies.user;
+    let token = req.cookies.authorization;
     jwt.verify(token, JWT_secret, (err) => {
       if (err) {
         res

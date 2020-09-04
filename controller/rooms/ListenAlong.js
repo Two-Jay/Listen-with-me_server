@@ -4,7 +4,7 @@ const rooms = require("../../../models").Room;
 const jwt = require("jsonwebtoken");
 module.exports = {
   get: (req, res) => {
-    let token = req.cookies.user;
+    let token = req.cookies.authorization;
     jwt.verify(token, JWT_secret, () => {
       users
         .findOne({ where: { nickname: req.body.nickname } })
