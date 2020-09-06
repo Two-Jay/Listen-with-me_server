@@ -10,6 +10,7 @@ dotenv.config();
 const usersRouter = require('./routes/users');
 const playlistRouter = require('./routes/playlists');
 const rootRouter = require('./routes/root');
+const roomRouter = require('./routes/rooms');
 
 const port = 4000;
 
@@ -36,6 +37,7 @@ app.use(morgan('dev'));
 app.use('/', rootRouter);
 app.use('/user', usersRouter);
 app.use('/playlist', playlistRouter);
+app.use('/room', roomRouter);
 
 app.use(cookieParser());
 
