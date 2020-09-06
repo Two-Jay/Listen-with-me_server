@@ -19,6 +19,12 @@ router.patch(
   usersController.updateprofileImage.patch
 );
 
-router.post('./oauth/google', usersController.authgoogle.post);
+router.get('./oauth/google', usersController.authgoogle.getAuth);
+router.get('./oauth/google/callback', usersController.authgoogle.authCallback);
+router.get('./oauth/google/logout', usersController.authgoogle.logout);
+
+router.get('./oauth/kakao', usersController.authkakao.getAuth);
+router.get('./oauth/kakao/callback', usersController.authkakao.authCallback);
+router.get('./oauth/kakao/logout', usersController.authgoogle.logout);
 
 module.exports = router;

@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { Controller } = require('../controller');
+const { rootController } = require('../controller');
 
-router.get('/randomlist', Controller.getRandomPlayList.get);
-router.post('/along', Controller.ListenAlong.post);
+router.get('/randomlist', rootController.getRandomPlayList.get);
+router.post('/along', rootController.ListenAlong.post);
 
 module.exports = router;
