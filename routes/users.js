@@ -9,6 +9,7 @@ router.get('/signout', usersController.signout.get);
 
 router.get('/nickname', usersController.nicknameValidation.get);
 router.get('/email', usersController.emailValidation.get);
+router.get('/token', usersController.tokenValidation.get);
 
 router.patch('/profile/nickname', usersController.updateNickname.patch);
 router.patch('/profile/description', usersController.updateprofileDesc.patch);
@@ -17,5 +18,7 @@ router.patch(
   s3.upload.single('file'),
   usersController.updateprofileImage.patch
 );
+
+router.post('./oauth/google', usersController.authgoogle.post);
 
 module.exports = router;
