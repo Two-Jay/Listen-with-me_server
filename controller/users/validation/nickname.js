@@ -6,11 +6,14 @@ module.exports = {
       .findOne({ where: { nickname: req.query.nickname } })
       .then((data) => {
         if (data) {
-          res
-            .status(409)
-            .send({ message: 'unavailable nickname, already exists nickname' });
+          res.status(202).send({
+            conflict: true,
+            message: 'unavailable nickname, already exists nickname',
+          });
         } else {
-          res.status(200).send({ message: 'available nickname' });
+          res
+            .status(200)
+            .send({ conflict: false, message: 'available nickname' });
         }
       })
       .catch(() =>

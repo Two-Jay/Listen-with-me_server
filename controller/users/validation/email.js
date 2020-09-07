@@ -14,7 +14,7 @@ module.exports = {
       .then((result) => {
         if (result) {
           res
-            .status(409)
+            .status(202)
             .send({ message: 'unavailable email, already exist email' });
         } else {
           if (regexr.test(email)) {
