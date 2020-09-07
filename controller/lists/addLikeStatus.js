@@ -18,7 +18,7 @@ module.exports = {
                 .catch(() =>
                   res
                     .status(500)
-                    .send({ message: "addLikestatus fail, server error" })
+                    .send({ message: "addLikeStatus fail, server error" })
                 );
             })
             .catch(() =>
