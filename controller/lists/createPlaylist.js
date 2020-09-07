@@ -4,16 +4,12 @@ const jwt = require("jsonwebtoken");
 module.exports = {
   post: (req, res) => {
     let token = req.cookies.authorization;
-    let listId;
     jwt.verify(token, process.env.JWT_secret, (err, decoded) => {
       if (err) {
         res.status(401).send({ message: "createRoom fail, need signin" });
       } else {
         playlist
           .create({ title: req.body.list_title, owner_id: decoded.id })
-          .then((list) => {
-            listId = list.id;
-          })
           .then((list) => {
             for (let i in req.body.entries) {
               music.create({
@@ -25,7 +21,7 @@ module.exports = {
               });
             }
           })
-          .then(() => res.status(201).send({ playlist_id: listId }))
+          .then((list) => res.status(201).send({ playlist_id: list.id }))
           .catch(() =>
             res.status(500).send({ message: "createRoom fail, server error" })
           );
