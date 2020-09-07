@@ -18,13 +18,13 @@ module.exports = {
                 .catch(() =>
                   res
                     .status(500)
-                    .send({ message: "likedList add fail, server error" })
+                    .send({ message: "addLikestatus fail, server error" })
                 );
             })
             .catch(() =>
               res
                 .status(500)
-                .send({ message: "likedList add fail, server error" })
+                .send({ message: "addLikeStatus fail, server error" })
             );
         } else {
           res
