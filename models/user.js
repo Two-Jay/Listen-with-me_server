@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       profileDescription: {
         type: DataTypes.STRING,
-        defaultValue: `안녕하세요. ${data.nickname}입니다.`,
+        defaultValue: `안녕하세요`,
       },
     },
     {
