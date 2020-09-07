@@ -9,4 +9,5 @@ module.exports = {
   updateprofileDesc: require('./profile/updateProfileDesc'),
   updateprofileImage: require('./profile/updateProfileImage'),
   authgoogle: require('./Oauth/auth-google'),
+  authkakao: require('./Oauth/auth-kakao'),
 };
