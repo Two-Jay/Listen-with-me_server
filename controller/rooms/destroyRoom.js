@@ -1,5 +1,5 @@
-const rooms = require("../../../models").Room;
-const audiences = require("../../../models").AudienceUser;
+const rooms = require("../../models").Room;
+const audiences = require("../../models").AudienceUser;
 const jwt = require("jsonwebtoken");
 
 module.exports = {

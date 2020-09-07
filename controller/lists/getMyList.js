@@ -1,7 +1,7 @@
-const playlist = require("../../../models").PlayList;
-const acc = require("../../../models").AccumulateAudience;
-const liked = require("../../../models").likedList;
-const music = require("../../../models").Music;
+const playlist = require("../../models").PlayList;
+const acc = require("../../models").AccumulateAudience;
+const liked = require("../../models").likedList;
+const music = require("../../models").Music;
 const jwt = require("jsonwebtoken");
 module.exports = {
   get: (req, res) => {
