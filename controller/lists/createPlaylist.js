@@ -1,5 +1,5 @@
-const playlist = require("../../../models").PlayList;
-const music = require("../../../models").Music;
+const playlist = require("../../models").PlayList;
+const music = require("../../models").Music;
 const jwt = require("jsonwebtoken");
 module.exports = {
   post: (req, res) => {

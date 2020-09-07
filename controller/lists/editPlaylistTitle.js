@@ -1,4 +1,4 @@
-const playlist = require("../../../models").PlayList;
+const playlist = require("../../models").PlayList;
 
 module.exports = {
   patch: (req, res) => {

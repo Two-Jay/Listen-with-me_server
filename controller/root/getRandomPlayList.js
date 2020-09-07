@@ -1,7 +1,7 @@
-const playlist = require("../../../models").PlayList;
-const liked = require("../../../models").likedList;
-const music = require("../../../models").Music;
-const users = require("../../../models").User;
+const playlist = require("../../models").PlayList;
+const liked = require("../../models").likedList;
+const music = require("../../models").Music;
+const users = require("../../models").User;
 const jwt = require("jsonwebtoken");
 const sequelize = require("sequelize");
 module.exports = {
