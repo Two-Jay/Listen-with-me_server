@@ -15,10 +15,15 @@ module.exports = {
         if (result) {
           res
             .status(202)
-            .send({ message: 'unavailable email, already exist email' });
+            .send({
+              conflict: true,
+              message: 'unavailable email, already exist email',
+            });
         } else {
           if (regexr.test(email)) {
-            res.status(200).send({ message: 'available email' });
+            res
+              .status(200)
+              .send({ conflict: false, message: 'available email' });
           } else {
             res
               .status(400)
