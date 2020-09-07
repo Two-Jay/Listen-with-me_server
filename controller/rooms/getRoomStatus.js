@@ -1,4 +1,4 @@
-const rooms = require('../../../models').Room;
+const rooms = require('../../models').Room;
 const jwt = require('jsonwebtoken');
 
 module.exports = {
