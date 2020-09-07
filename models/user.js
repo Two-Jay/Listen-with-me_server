@@ -21,19 +21,6 @@ module.exports = (sequelize, DataTypes) => {
       profileDescription: DataTypes.STRING,
     },
     {
-      hooks: {
-        afterCreate: (data, option) => {
-          if (data.profileURL === null) {
-            data.profileURL =
-              'https://lwm-test.s3.ap-northeast-2.amazonaws.com/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%2C+2020-09-07+13-20-34.png';
-          }
-          if (data.profileDescription === null) {
-            data.profileDescription = `안녕하세요. ${data.nickname}입니다.`;
-          }
-        },
-      },
-    },
-    {
       sequelize,
       modelName: 'User',
     }

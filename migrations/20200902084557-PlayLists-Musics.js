@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -8,13 +8,13 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    await queryInterface.addConstraint("Musics", {
-      fields: ["playlist_id"],
-      type: "foreign key",
-      name: "musics_foreign_key",
+    await queryInterface.addConstraint('Musics', {
+      fields: ['playlist_id'],
+      type: 'foreign key',
+      name: 'musics_foreign_key',
       references: {
-        table: "PlayLists",
-        field: "id",
+        table: 'PlayLists',
+        field: 'id',
       },
     });
   },
@@ -26,6 +26,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.removeConstraint("Musics", "musics_foreign_key");
+    await queryInterface.removeConstraint('Musics', 'musics_foreign_key');
   },
 };
