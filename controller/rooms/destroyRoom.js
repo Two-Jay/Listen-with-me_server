@@ -1,6 +1,6 @@
-const rooms = require("../../models").Room;
-const audiences = require("../../models").AudienceUser;
-const jwt = require("jsonwebtoken");
+const rooms = require('../../models').Room;
+const audiences = require('../../models').AudienceUser;
+const jwt = require('jsonwebtoken');
 
 module.exports = {
   delete: (req, res) => {
@@ -14,17 +14,17 @@ module.exports = {
               audiences.destroy({ where: { playlist_id: room.playlist_id } })
             )
             .then(() =>
-              res.status(204).send({ message: "room destroy success" })
+              res.status(204).send({ message: 'room destroy success' })
             )
             .catch(() =>
               res
                 .status(500)
-                .send({ message: "room destroy fail, server error" })
+                .send({ message: 'room destroy fail, server error' })
             );
         } else {
           res
             .status(404)
-            .send({ message: "room destroy fail, room not found" });
+            .send({ message: 'room destroy fail, room not found' });
         }
       });
     });

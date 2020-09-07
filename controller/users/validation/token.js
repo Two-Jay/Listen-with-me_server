@@ -8,11 +8,11 @@ module.exports = {
     } catch (err) {
       if (err.name === 'TokenExpiredError') {
         return res
-          .status(419)
+          .status(403)
           .send({ message: 'verifyToken fail, Token was expired' });
       }
       return res
-        .status(401)
+        .status(400)
         .send({ message: 'verifyToken fail, invalid token' });
     }
   },

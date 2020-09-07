@@ -1,5 +1,5 @@
-const rooms = require("../../models").Room;
-const jwt = require("jsonwebtoken");
+const rooms = require('../../models').Room;
+const jwt = require('jsonwebtoken');
 
 module.exports = {
   post: (req, res) => {
@@ -11,7 +11,7 @@ module.exports = {
           if (data) {
             res
               .status(409)
-              .send({ message: "createRoom fail, already exist room" });
+              .send({ message: 'createRoom fail, already exist room' });
           } else {
             rooms
               .create({
@@ -22,7 +22,7 @@ module.exports = {
               .catch(() =>
                 res
                   .status(500)
-                  .send({ message: "createRoom fail, server error" })
+                  .send({ message: 'createRoom fail, server error' })
               );
           }
         });

@@ -1,8 +1,8 @@
-const playlist = require("../../models").PlayList;
-const liked = require("../../models").likedList;
-const music = require("../../models").Music;
-const users = require("../../models").User;
-const jwt = require("jsonwebtoken");
+const playlist = require('../../models').PlayList;
+const liked = require('../../models').likedList;
+const music = require('../../models').Music;
+const users = require('../../models').User;
+const jwt = require('jsonwebtoken');
 
 module.exports = {
   get: (req, res) => {
@@ -13,7 +13,7 @@ module.exports = {
           include: [
             {
               model: Room,
-              attribues: [["id", "room_id"], "playlist_id"],
+              attribues: [['id', 'room_id'], 'playlist_id'],
               required: true,
             },
           ],
@@ -21,14 +21,14 @@ module.exports = {
         })
         .then((data) => {
           for (let i in data) {
-            data[i]["thumbnail"] = music.findOne({
-              where: { playlist_id: data[i]["id"] },
+            data[i]['thumbnail'] = music.findOne({
+              where: { playlist_id: data[i]['id'] },
             }).thumbnails;
-            data[i]["likeAmount"] = liked.count({
-              where: { likedList_id: data[i]["id"] },
+            data[i]['likeAmount'] = liked.count({
+              where: { likedList_id: data[i]['id'] },
             });
-            data[i]["nickname"] = users.findOne({
-              where: { id: data[i]["owner_id"] },
+            data[i]['nickname'] = users.findOne({
+              where: { id: data[i]['owner_id'] },
             }).nickname;
           }
         })
@@ -51,7 +51,7 @@ module.exports = {
           res.status(200).send(payload);
         })
         .catch(() =>
-          res.status(500).send({ message: "loading fail, server error" })
+          res.status(500).send({ message: 'loading fail, server error' })
         );
     });
   },
