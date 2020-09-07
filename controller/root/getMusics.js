@@ -1,7 +1,7 @@
-const music = require("../../models").Music;
-const jwt = require("jsonwebtoken");
+const music = require('../../models').Music;
+const jwt = require('jsonwebtoken');
 module.exports = {
-  post: (req, res) => {
+  get: (req, res) => {
     let token = req.cookies.authorization;
     jwt.verify(token, process.env.JWT_secret, () => {
       music
@@ -10,7 +10,7 @@ module.exports = {
         .catch(() =>
           res
             .status(500)
-            .send({ message: "list data loading fail, server error" })
+            .send({ message: 'list data loading fail, server error' })
         );
     });
   },
