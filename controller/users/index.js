@@ -1,17 +1,19 @@
 module.exports = {
-  // 회원가입 관련 api
+  // 회원 정보 관련
   signin: require('./signin'),
   signup: require('./signup'),
   signout: require('./signout'),
-  // 유효성 검사 관련 api
+  // server-side validation 관련
   nicknameValidation: require('./validation/nickname'),
   emailValidation: require('./validation/email'),
   tokenValidation: require('./validation/token'),
-  // 프로필 수정 관련 api
+  // profile 내 정보 수집 및 수정 관련
   updateNickname: require('./profile/updateNickname'),
   updateprofileDesc: require('./profile/updateProfileDesc'),
   updateprofileImage: require('./profile/updateProfileImage'),
-  // Oauth social login 관련 api
+  getAllAudienceAmount: require('./profile/getAllAudienceAmount'),
+  getAllLikeAmount: require('./profile/getAllLikeAmount'),
+  // social login 관련
   authgoogle: require('./Oauth/auth-google'),
   authkakao: require('./Oauth/auth-kakao'),
 };

@@ -17,8 +17,15 @@ module.exports = (sequelize, DataTypes) => {
       nickname: DataTypes.STRING,
       password: DataTypes.STRING,
       OauthType: DataTypes.INTEGER,
-      profileURL: DataTypes.STRING,
-      profileDescription: DataTypes.STRING,
+      profileURL: {
+        type: DataTypes.STRING,
+        defaultValue:
+          'https://lwm-test.s3.ap-northeast-2.amazonaws.com/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%2C+2020-09-07+13-20-34.png',
+      },
+      profileDescription: {
+        type: DataTypes.STRING,
+        defaultValue: `안녕하세요`,
+      },
     },
     {
       sequelize,
