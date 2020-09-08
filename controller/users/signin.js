@@ -23,7 +23,7 @@ module.exports = {
             },
             process.env.JWT_secret,
             {
-              expriesIn: tokenExpireTime,
+              expiresIn: tokenExpireTime,
             }
           );
 
