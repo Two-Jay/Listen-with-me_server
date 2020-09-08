@@ -13,7 +13,7 @@ module.exports = {
       type: "foreign key",
       name: "rooms_foreign_key_3",
       references: {
-        table: "Musics",
+        table: "Music",
         field: "id",
       },
     });
