@@ -13,4 +13,6 @@ router.patch('audience', rootController.addAudienceAmount.patch);
 router.patch('likelist', rootController.addLikeStatus.patch);
 router.patch('unlikelist', rootController.removeLikeStatus.patch);
 
+router.delete('music', rootController.removeMusic.delete);
+
 module.exports = router;

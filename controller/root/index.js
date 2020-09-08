@@ -6,4 +6,5 @@ module.exports = {
   addLikeStatus: require('./like-api/addLikeStatus'),
   getLikeStatus: require('./like-api/getLikeStatus'),
   removeLikeStatus: require('./like-api/removeLikeStatus'),
+  removeMusic: require('./removeMusic'),
 };
