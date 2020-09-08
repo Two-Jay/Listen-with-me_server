@@ -1,6 +1,7 @@
-const acc = require("../../models").AccumulateAudience;
-const playlist = require("../../models").PlayList;
-const jwt = require("jsonwebtoken");
+const acc = require('../../../models').AccumulateAudience;
+const playlist = require('../../../models').PlayList;
+const jwt = require('jsonwebtoken');
+
 module.exports = {
   get: (req, res) => {
     let token = req.cookies.authorization;
@@ -10,13 +11,13 @@ module.exports = {
         if (list) {
           for (let i in list) {
             acc
-              .count({ where: { playlist_id: list[i]["id"] } })
+              .count({ where: { playlist_id: list[i]['id'] } })
               .then((number) => {
                 count = count + number;
               })
               .catch(() =>
                 res.status(500).send({
-                  message: "getAllAudienceAmount fail, server error",
+                  message: 'getAllAudienceAmount fail, server error',
                 })
               );
           }
@@ -24,7 +25,7 @@ module.exports = {
         } else {
           res
             .status(400)
-            .send({ message: "getAllAudienceAmount fail, bad request" });
+            .send({ message: 'getAllAudienceAmount fail, bad request' });
         }
       });
     });

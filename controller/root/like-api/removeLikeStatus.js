@@ -1,6 +1,6 @@
-const playlist = require("../../models").PlayList;
-const liked = require("../../models").likedList;
-const jwt = require("jsonwebtoken");
+const playlist = require('../../../models').PlayList;
+const liked = require('../../../models').likedList;
+const jwt = require('jsonwebtoken');
 module.exports = {
   patch: (req, res) => {
     let token = req.cookies.authorization;
@@ -20,18 +20,18 @@ module.exports = {
                 .catch(() =>
                   res
                     .status(500)
-                    .send({ message: "removeLikeStatus fail, server error" })
+                    .send({ message: 'removeLikeStatus fail, server error' })
                 );
             })
             .catch(() =>
               res
                 .status(500)
-                .send({ message: "removeLikeStatus fail, server error" })
+                .send({ message: 'removeLikeStatus fail, server error' })
             );
         } else {
           res
             .status(404)
-            .send({ message: "removeLikeStatus fail, list not found" });
+            .send({ message: 'removeLikeStatus fail, list not found' });
         }
       });
     });
