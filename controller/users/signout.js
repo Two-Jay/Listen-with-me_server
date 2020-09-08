@@ -9,7 +9,7 @@ module.exports = {
       } else {
         res
           .status(204)
-          .clearCookie(authorization)
+          .clearCookie(token)
           .send({ message: "signout success" });
       }
     });
