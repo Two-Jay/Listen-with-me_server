@@ -19,6 +19,9 @@ router.patch(
   usersController.updateprofileImage.patch
 );
 
+router.get('/profile/audience', usersController.getAllAudienceAmount.get);
+router.get('/profile/like', usersController.getAllLikeAmount.get);
+
 router.get('./oauth/google', usersController.authgoogle.getAuth);
 router.get('./oauth/google/callback', usersController.authgoogle.authCallback);
 router.get('./oauth/google/logout', usersController.authgoogle.logout);
