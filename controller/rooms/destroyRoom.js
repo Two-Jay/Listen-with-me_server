@@ -1,6 +1,7 @@
-const rooms = require('../../models').Room;
-const audiences = require('../../models').AudienceUser;
-const jwt = require('jsonwebtoken');
+const rooms = require("../../models").Room;
+const audiences = require("../../models").AudienceUser;
+const acc = require("../../models").AccumulateAudience;
+const jwt = require("jsonwebtoken");
 
 module.exports = {
   delete: (req, res) => {
@@ -8,23 +9,26 @@ module.exports = {
     jwt.verify(token, process.env.JWT_secret, () => {
       rooms.findOne({ where: { id: req.query.id } }).then((room) => {
         if (room) {
-          rooms
-            .destroy({ where: { id: room.id } })
+          acc
+            .update({ room_id: null }, { where: { room_id: req.query.id } })
+            .then(() => rooms.destroy({ where: { id: req.query.id } }))
             .then(() =>
-              audiences.destroy({ where: { playlist_id: room.playlist_id } })
+              audiences.destroy({
+                where: { playList_id: room.playlist_id },
+              })
             )
             .then(() =>
-              res.status(204).send({ message: 'room destroy success' })
+              res.status(204).send({ message: "room destroy success" })
             )
             .catch(() =>
               res
                 .status(500)
-                .send({ message: 'room destroy fail, server error' })
+                .send({ message: "room destroy fail, server error" })
             );
         } else {
           res
             .status(404)
-            .send({ message: 'room destroy fail, room not found' });
+            .send({ message: "room destroy fail, room not found" });
         }
       });
     });
