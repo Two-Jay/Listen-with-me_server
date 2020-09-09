@@ -9,24 +9,22 @@ module.exports = {
     let token = req.cookies.authorization;
     jwt.verify(token, process.env.JWT_secret, () => {
       playlist
-        .findOne({ order: sequelize.random() })
-        .then((data) => {
-          data.thumbnail = music.findOne({
-            where: { playlist_id: data["id"] },
-          }).thumbnails;
-          data.likeAmount = liked.count({
-            where: { likedList_id: data["id"] },
+        .findOne({ order: sequelize.fn("RAND") })
+        .then(async (data) => {
+          data.music = await music.findOne({
+            where: { playlist_id: data.id },
           });
-          data.nickname = users.findOne({
-            where: { id: data["owner_id"] },
-          }).nickname;
-        })
-        .then((data) => {
+          data.likeAmount = await liked.count({
+            where: { likedList_id: data.id },
+          });
+          data.user = await users.findOne({
+            where: { id: data.owner_id },
+          });
           let payload = {
             id: data.id,
-            thumbnails: data.thumbnail,
+            thumbnails: data.music.thumbnails,
             title: data.title,
-            nickname: data.nickname,
+            nickname: data.user.nickname,
             likeAmount: data.likeAmount,
           };
           res.status(200).send(payload);
