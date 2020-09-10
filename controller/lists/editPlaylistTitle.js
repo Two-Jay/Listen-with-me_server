@@ -1,5 +1,5 @@
-const playlist = require('../../models').PlayList;
-
+const playlist = require("../../models").PlayList;
+const jwt = require("jsonwebtoken");
 module.exports = {
   patch: (req, res) => {
     let token = req.cookies.authorization;
@@ -7,7 +7,7 @@ module.exports = {
       if (err) {
         res
           .status(401)
-          .send({ message: 'editPlaylistTitle fail, need authentication' });
+          .send({ message: "editPlaylistTitle fail, need authentication" });
       } else {
         playlist
           .update({ title: req.body.title }, { where: { id: req.query.id } })
@@ -15,7 +15,7 @@ module.exports = {
           .catch(() =>
             res
               .status(500)
-              .send({ message: 'editPlaylistTitle fail, server error' })
+              .send({ message: "editPlaylistTitle fail, server error" })
           );
       }
     });
