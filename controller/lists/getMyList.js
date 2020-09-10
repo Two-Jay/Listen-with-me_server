@@ -8,7 +8,7 @@ module.exports = {
     let token = req.cookies.authorization;
     jwt.verify(token, process.env.JWT_secret, async (err, decoded) => {
       if (err) {
-        res.status(400).send({ message: "getMylist fail, bad request" });
+        res.status(401).send({ message: "getMylist fail, need signin" });
       } else {
         try {
           let payload = [];
