@@ -1,52 +1,49 @@
-const playlist = require('../../models').PlayList;
-const acc = require('../../models').AccumulateAudience;
-const liked = require('../../models').likedList;
-const music = require('../../models').Music;
-const jwt = require('jsonwebtoken');
+const playlist = require("../../models").PlayList;
+const acc = require("../../models").AccumulateAudience;
+const liked = require("../../models").likedList;
+const music = require("../../models").Music;
+const jwt = require("jsonwebtoken");
 module.exports = {
   get: (req, res) => {
     let token = req.cookies.authorization;
-    jwt.verify(token, process.env.JWT_secret, (err, decoded) => {
+    jwt.verify(token, process.env.JWT_secret, async (err, decoded) => {
       if (err) {
-        res.status(400).send({ message: 'getMylist fail, bad request' });
+        res.status(400).send({ message: "getMylist fail, bad request" });
       } else {
-        playlist
-          .findAll({
+        try {
+          let payload = [];
+          let list = await playlist.findAll({
             where: { owner_id: decoded.userid },
-          })
-          .then((data) => {
-            for (let i in data) {
-              data[i]['thumbnail'] = music.findOne({
-                where: { playlist_id: data[i]['id'] },
-              }).thumbnails;
-              data[i]['likeAmount'] = liked.count({
-                where: { likedList_id: data[i]['id'] },
-              });
-              data[i]['audienceAmount'] = acc.count({
-                where: { playlist_id: data[i]['id'] },
-              });
-            }
-          })
-          .then((data) => {
-            let payload = [];
-            for (let j in data) {
-              let tmpObj = {
-                id: data[j].id,
-                title: data[j].title,
-                thumbnail: data[j].thumbnail,
-                user_id: data[j].owner_id,
-                likeAmount: data[j].likeAmount,
-                audienceAmount: data[j].audienceAmount,
-              };
-              payload.push(tmpObj);
-            }
-            res.status(200).send(payload);
-          })
-          .catch(() =>
-            res
-              .status(500)
-              .send({ message: 'getMylist Loading fail, server error' })
-          );
+          });
+
+          for (let i in list) {
+            let musicData = await music.findOne({
+              where: { playlist_id: list[i]["id"] },
+            });
+            let likeAmount = await liked.count({
+              where: { likedList_id: list[i]["id"] },
+            });
+            let audienceAmount = await acc.count({
+              where: { playlist_id: list[i]["id"] },
+            });
+            let tmpObj = {
+              id: list[i].id,
+              title: list[i].title,
+              thumbnail: musicData === null ? null : musicData.thumbnails,
+              user_id: list[i].owner_id,
+              likeAmount: likeAmount,
+              audienceAmount: audienceAmount,
+            };
+
+            payload.push(tmpObj);
+          }
+          res.status(200).send(payload);
+        } catch (err) {
+          console.log(err);
+          res
+            .status(500)
+            .send({ message: "getMylist Loading fail, server error" });
+        }
       }
     });
   },
