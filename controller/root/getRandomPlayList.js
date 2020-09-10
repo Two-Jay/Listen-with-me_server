@@ -7,31 +7,37 @@ const sequelize = require("sequelize");
 module.exports = {
   get: (req, res) => {
     let token = req.cookies.authorization;
-    jwt.verify(token, process.env.JWT_secret, () => {
-      playlist
-        .findOne({ order: sequelize.fn("RAND") })
-        .then(async (data) => {
-          data.music = await music.findOne({
-            where: { playlist_id: data.id },
-          });
-          data.likeAmount = await liked.count({
-            where: { likedList_id: data.id },
-          });
-          data.user = await users.findOne({
-            where: { id: data.owner_id },
-          });
-          let payload = {
-            id: data.id,
-            thumbnails: data.music.thumbnails,
-            title: data.title,
-            nickname: data.user.nickname,
-            likeAmount: data.likeAmount,
-          };
-          res.status(200).send(payload);
-        })
-        .catch(() =>
-          res.status(500).send({ message: "random loading fail, server error" })
-        );
+    jwt.verify(token, process.env.JWT_secret, (err) => {
+      if (err) {
+        res.status(401).send({ message: "random loading fail, need signin" });
+      } else {
+        playlist
+          .findOne({ order: sequelize.fn("RAND") })
+          .then(async (data) => {
+            data.music = await music.findOne({
+              where: { playlist_id: data.id },
+            });
+            data.likeAmount = await liked.count({
+              where: { likedList_id: data.id },
+            });
+            data.user = await users.findOne({
+              where: { id: data.owner_id },
+            });
+            let payload = {
+              id: data.id,
+              thumbnails: data.music.thumbnails,
+              title: data.title,
+              nickname: data.user.nickname,
+              likeAmount: data.likeAmount,
+            };
+            res.status(200).send(payload);
+          })
+          .catch(() =>
+            res
+              .status(500)
+              .send({ message: "random loading fail, server error" })
+          );
+      }
     });
   },
 };
