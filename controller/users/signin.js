@@ -32,6 +32,7 @@ module.exports = {
               expiresIn: tokenExpireTime,
             }
           );
+
           res.status(200).cookie("authorization", token).send({
             email: email,
             nickname: result.nickname,
