@@ -1,33 +1,42 @@
-const acc = require('../../../models').AccumulateAudience;
-const playlist = require('../../../models').PlayList;
-const jwt = require('jsonwebtoken');
+const acc = require("../../../models").AccumulateAudience;
+const playlist = require("../../../models").PlayList;
+const jwt = require("jsonwebtoken");
 
 module.exports = {
   get: (req, res) => {
     let token = req.cookies.authorization;
-    let count = 0;
-    jwt.verify(token, process.env.JWT_secret, (err, decoded) => {
-      playlist.findAll({ where: { owner_id: decoded.userid } }).then((list) => {
-        if (list) {
-          for (let i in list) {
-            acc
-              .count({ where: { playlist_id: list[i]['id'] } })
-              .then((number) => {
+    jwt.verify(token, process.env.JWT_secret, async (err, decoded) => {
+      if (err) {
+        res
+          .status(401)
+          .send({ message: "getAllAudienceAmount fail, need signin" });
+      } else {
+        try {
+          let count = 0;
+          let list = await playlist.findAll({
+            where: { owner_id: decoded.userid },
+          });
+          if (list) {
+            for (let i in list) {
+              try {
+                let number = await acc.count({
+                  where: { playlist_id: list[i]["id"] },
+                });
                 count = count + number;
-              })
-              .catch(() =>
+              } catch (err) {
                 res.status(500).send({
-                  message: 'getAllAudienceAmount fail, server error',
-                })
-              );
+                  message: "getAllAudienceAmount fail, server error",
+                });
+              }
+            }
+            res.status(200).send({ audienceAmount: count });
           }
-          res.status(200).send({ audienceAmount: count });
-        } else {
+        } catch (err) {
           res
             .status(400)
-            .send({ message: 'getAllAudienceAmount fail, bad request' });
+            .send({ message: "getAllAudienceAmount fail, bad request" });
         }
-      });
+      }
     });
   },
 };
