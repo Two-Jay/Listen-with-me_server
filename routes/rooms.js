@@ -11,6 +11,7 @@ router.get("/listener", roomsController.getCurrentListener.get);
 router.post("/listener", roomsController.addCurrentListener.post);
 router.delete("/listener", roomsController.removeCurrentListener.delete);
 
+
 router.post("/listener", roomsController.addCurrentListener.post);
 router.delete("/listener", roomsController.removeCurrentListener.delete);
 router.get("/listener", roomsController.getCurrentListener.get);
