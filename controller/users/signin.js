@@ -1,6 +1,5 @@
 let tokenExpireTime = process.env.NODE_ENV === 'production' ? '1h' : '5m';
 // 개발환경에 따른 토큰 expiretime 설정
-
 const jwt = require('jsonwebtoken');
 const users = require('../../models').User;
 
@@ -23,10 +22,9 @@ module.exports = {
             },
             process.env.JWT_secret,
             {
-              expriesIn: tokenExpireTime,
+              expiresIn: tokenExpireTime,
             }
           );
-
           res.status(200).cookie('authorization', token).send({
             email: email,
             nickname: result.nickname,

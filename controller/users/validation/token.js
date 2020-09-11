@@ -4,7 +4,7 @@ module.exports = {
       req.decoded = jwt.verify(req.header.authorization, JWT_secret);
       return res
         .status(200)
-        .send({ message: 'verifyToken success, valid token}' });
+        .send({ message: 'verifyToken success, valid token' });
     } catch (err) {
       if (err.name === 'TokenExpiredError') {
         return res
