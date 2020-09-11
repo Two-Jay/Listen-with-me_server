@@ -7,4 +7,8 @@ router.post('', roomsController.createRoom.post);
 router.delete('', roomsController.destroyRoom.delete);
 router.patch('', roomsController.setCurrentMusic.patch);
 
+router.post('/listener', roomsController.addCurrentListener.post);
+router.remove('/listener', roomsController.removeCurrentListener.delete);
+router.get('/listener', roomsController.getCurrentListener.get);
+
 module.exports = router;
