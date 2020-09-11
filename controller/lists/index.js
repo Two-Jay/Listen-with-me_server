@@ -5,5 +5,5 @@ module.exports = {
   createPlaylist: require('./createPlaylist'),
   removePlaylist: require('./removePlaylist'),
   editPlaylistTitle: require('./editPlaylistTitle'),
-  removeMusic: require(),
+  removeMusic: require('./removePlaylist'),
 };

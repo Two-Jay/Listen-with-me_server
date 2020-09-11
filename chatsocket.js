@@ -1,7 +1,7 @@
 const moment = require('moment');
 const botname = 'Bot';
 
-module.exports = (io) => {
+module.exports = function (io) {
   io.on('connetionn', (socket) => {
     socket.on('joinRoom', ({ playlist_id, user_nickname }) => {
       socket.join(playlist_id);
@@ -33,12 +33,12 @@ module.exports = (io) => {
       );
     });
   });
-
-  function formatMessage(user_nickname, message) {
-    return {
-      user_nickname,
-      message,
-      time: moment().format('h:mm a'),
-    };
-  }
 };
+
+function formatMessage(user_nickname, message) {
+  return {
+    user_nickname,
+    message,
+    time: moment().format('h:mm a'),
+  };
+}
