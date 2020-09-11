@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const app = express();
 
 const port = 4500;
@@ -21,20 +21,8 @@ const rootRouter = require('./routes/root');
 const roomsRouter = require('./routes/rooms');
 const roomsocketRouter = require('./routes/roomsocket.js')(app.io);
 
-// DB sync check
-const models = require('./models/index.js');
-models.sequelize
-  .sync()
-  .then(() => {
-    console.log('DB connection success');
-  })
-  .catch((err) => {
-    console.log('**DB connection fail**');
-    console.log(err);
-  });
-
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+app.get("/", (req, res) => {
+  res.send("Hello World!");
 });
 
 app.use(cookieParser());

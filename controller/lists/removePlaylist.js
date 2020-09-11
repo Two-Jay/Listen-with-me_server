@@ -1,26 +1,37 @@
-const playlist = require('../../models').PlayList;
-const music = require('../../models').Music;
-const jwt = require('jsonwebtoken');
+const playlist = require("../../models").PlayList;
+const music = require("../../models").Music;
+const room = require("../../models").Room;
+const liked = require("../../models").likedList;
+const acc = require("../../models").AccumulateAudience;
+const audience = require("../../models").AudienceUser;
+const jwt = require("jsonwebtoken");
 module.exports = {
   delete: (req, res) => {
     let token = req.cookies.authorization;
-    jwt.verify(token, process.env.JWT_secret, (err) => {
+    jwt.verify(token, process.env.JWT_secret, async (err) => {
       if (err) {
         res
           .status(401)
-          .send({ message: 'removePlaylist fail, need Authentication' });
+          .send({ message: "removePlaylist fail, need Authentication" });
       } else {
-        playlist
-          .destroy({ where: { id: req.query.id } })
-          .then(() => music.destroy({ where: { playlist_id: req.query.id } }))
-          .then(() =>
-            res.status(204).send({ message: 'removePlaylist success' })
-          )
-          .catch(() =>
-            res
-              .status(500)
-              .send({ message: 'removePlaylist fail, server error' })
-          );
+        try {
+          await music.destroy({ where: { playlist_id: Number(req.query.id) } });
+          await room.destroy({ where: { playlist_id: Number(req.query.id) } });
+          await liked.destroy({
+            where: { likedList_id: Number(req.query.id) },
+          });
+          await acc.destroy({ where: { playlist_id: Number(req.query.id) } });
+          await audience.destroy({
+            where: { playList_id: Number(req.query.id) },
+          });
+          await playlist.destroy({ where: { id: Number(req.query.id) } });
+          res.status(204).send({ message: "removePlaylist success" });
+        } catch (err) {
+          console.log(err);
+          res
+            .status(500)
+            .send({ message: "removePlaylist fail, server error" });
+        }
       }
     });
   },
