@@ -8,7 +8,7 @@ const io = SocketIO(server);
 const moment = require('moment');
 const botname = 'Bot';
 
-io.on('connetionn', (socket) => {
+io.on('connection', (socket) => {
   socket.on('joinRoom', ({ playlist_id, user_nickname }) => {
     socket.join(playlist_id);
     console.log(playlist_id, user_nickname);

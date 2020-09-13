@@ -17,6 +17,25 @@ const playlistsRouter = require('./routes/playlists');
 const rootRouter = require('./routes/root');
 const roomsRouter = require('./routes/rooms');
 
+//cors configuration
+const cors = require('cors');
+const whitelist = ['*'];
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: 'GET,PUT,PATCH,POST,DELETE,OPTIONS',
+  allowedHeaders: 'origin, content-type, authorization, token',
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+};
+
+
 // DB sync check
 const models = require('./models/index.js');
 models.sequelize
@@ -32,10 +51,11 @@ models.sequelize
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
-
+ 
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors(corsOptions));
 
 app.use(morgan('dev'));
 app.use('/', rootRouter);
