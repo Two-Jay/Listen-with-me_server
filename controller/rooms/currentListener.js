@@ -21,7 +21,7 @@ module.exports = {
     });
   },
   post: (req, res) => {
-    let token = req.cookies.authorization;
+    let token = req.get("authorization").substring(7);
     jwt.verify(token, process.env.JWT_secret, (err, decoded) => {
       if (err) {
         res
@@ -54,7 +54,7 @@ module.exports = {
     });
   },
   delete: (req, res) => {
-    let token = req.cookies.authorization;
+    let token = req.get("authorization").substring(7);
     jwt.verify(token, process.env.JWT_secret, (err, decoded) => {
       if (err) {
         res

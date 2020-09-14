@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 
 module.exports = {
   post: (req, res) => {
-    let token = req.cookies.authorization;
+    let token = req.get("authorization").substring(7);
     jwt.verify(token, process.env.JWT_secret, (err, decoded) => {
       if (err) {
         res.status(401).send({ message: "createRoom fail, need signin" });

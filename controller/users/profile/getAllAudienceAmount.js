@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 module.exports = {
   get: (req, res) => {
-    let token = req.cookies.authorization;
+    let token = req.get("authorization").substring(7);
     jwt.verify(token, process.env.JWT_secret, async (err, decoded) => {
       if (err) {
         res

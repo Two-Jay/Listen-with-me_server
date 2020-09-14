@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const sequelize = require("sequelize");
 module.exports = {
   get: (req, res) => {
-    let token = req.cookies.authorization;
+    let token = req.get("authorization").substring(7);
     jwt.verify(token, process.env.JWT_secret, (err) => {
       if (err) {
         res.status(401).send({ message: "random loading fail, need signin" });

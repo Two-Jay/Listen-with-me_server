@@ -3,7 +3,7 @@ const music = require("../../models").Music;
 const jwt = require("jsonwebtoken");
 module.exports = {
   post: (req, res) => {
-    let token = req.cookies.authorization;
+    let token = req.get("authorization").substring(7);
     let listId;
     jwt.verify(token, process.env.JWT_secret, (err, decoded) => {
       if (err) {
