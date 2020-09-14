@@ -19,7 +19,10 @@ const roomsRouter = require('./routes/rooms');
 
 //cors configuration
 const cors = require('cors');
-const whitelist = ['*'];
+const whitelist = [
+  'http://localhost:3000',
+  'http://listen-with-me-test.s3-website.ap-northeast-2.amazonaws.com',
+];
 const corsOptions = {
   origin: (origin, callback) => {
     if (whitelist.indexOf(origin) !== -1) {
@@ -29,10 +32,6 @@ const corsOptions = {
     }
   },
   credentials: true,
-  methods: 'GET,PUT,PATCH,POST,DELETE,OPTIONS',
-  allowedHeaders: 'origin, content-type, authorization, token',
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
 };
 
 
