@@ -33,12 +33,16 @@ module.exports = {
             }
           );
 
-          res.status(200).cookie("authorization", token).send({
-            email: email,
-            nickname: result.nickname,
-            profileURL: result.profileURL,
-            profileDescription: result.profileDescription,
-          });
+          res
+            .status(200)
+            .set('Access-Control-Expose-Headers', 'authorization')
+            .set('authorization', `Bearer ${token}`)
+            .send({
+              email: email,
+              nickname: result.nickname,
+              profileURL: result.profileURL,
+              profileDescription: result.profileDescription,
+            });
         } else {
           res.status(404).send({ message: "signin fail, invalid user data" });
         }
