@@ -3,7 +3,7 @@ const liked = require("../../../models").likedList;
 const jwt = require("jsonwebtoken");
 module.exports = {
   patch: (req, res) => {
-    let token = req.cookies.authorization;
+    let token = req.get("authorization").substring(7);
     jwt.verify(token, process.env.JWT_secret, (err, decoded) => {
       if (err) {
         res.status(401).send({ message: "addLikeStatus fail, need signin" });

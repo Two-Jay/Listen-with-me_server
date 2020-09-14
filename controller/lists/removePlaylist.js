@@ -7,7 +7,7 @@ const audience = require("../../models").AudienceUser;
 const jwt = require("jsonwebtoken");
 module.exports = {
   delete: (req, res) => {
-    let token = req.cookies.authorization;
+    let token = req.get("authorization").substring(7);
     jwt.verify(token, process.env.JWT_secret, async (err) => {
       if (err) {
         res

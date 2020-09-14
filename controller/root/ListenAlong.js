@@ -4,7 +4,7 @@ const rooms = require("../../models").Room;
 const jwt = require("jsonwebtoken");
 module.exports = {
   post: (req, res) => {
-    let token = req.cookies.authorization;
+    let token = req.get("authorization").substring(7);
     jwt.verify(token, process.env.JWT_secret, (err) => {
       if (err) {
         res.status(401).send({ message: "searching fail, need signin" });
