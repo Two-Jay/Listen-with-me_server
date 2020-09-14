@@ -9,6 +9,7 @@ module.exports = {
       } else {
         res
           .status(204)
+          .set("Access-Control-Expose-Headers", "authorization")
           .set("authorization", "")
           .send({ message: "signout success" });
       }
