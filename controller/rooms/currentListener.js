@@ -21,71 +21,85 @@ module.exports = {
     });
   },
   post: (req, res) => {
-    let token = req.get("authorization").substring(7);
-    jwt.verify(token, process.env.JWT_secret, (err, decoded) => {
-      if (err) {
-        res
-          .status(401)
-          .send({ message: "addCurrentListener fail, token needed" });
-      } else {
-        playlist
-          .findOne({ where: { id: req.body.playlist_id } })
-          .then((list) => {
-            if (list) {
-              current
-                .create({ playList_id: list.id, user_id: decoded.userid })
-                .then(() =>
-                  res
-                    .status(201)
-                    .send({ message: "addCurrentListener success" })
-                )
-                .catch(() =>
-                  res
-                    .status(500)
-                    .send({ message: "addCurrentListener fail, server error" })
-                );
-            } else {
-              res.status(404).send({
-                message: "addCurrentListener fail, invalid playlist_id",
-              });
-            }
-          });
-      }
-    });
+    let tokenString = req.get("authorization");
+    if (tokenString && tokenString.length === 71) {
+      let token = tokenString.substring(7);
+      jwt.verify(token, process.env.JWT_secret, (err, decoded) => {
+        if (err) {
+          res
+            .status(401)
+            .send({ message: "addCurrentListener fail, need signin" });
+        } else {
+          playlist
+            .findOne({ where: { id: req.body.playlist_id } })
+            .then((list) => {
+              if (list) {
+                current
+                  .create({ playList_id: list.id, user_id: decoded.userid })
+                  .then(() =>
+                    res
+                      .status(201)
+                      .send({ message: "addCurrentListener success" })
+                  )
+                  .catch(() =>
+                    res.status(500).send({
+                      message: "addCurrentListener fail, server error",
+                    })
+                  );
+              } else {
+                res.status(404).send({
+                  message: "addCurrentListener fail, invalid playlist_id",
+                });
+              }
+            });
+        }
+      });
+    } else {
+      res
+        .status(400)
+        .send({ message: "addCurrentListener fail, invalid token" });
+    }
   },
   delete: (req, res) => {
-    let token = req.get("authorization").substring(7);
-    jwt.verify(token, process.env.JWT_secret, (err, decoded) => {
-      if (err) {
-        res
-          .status(401)
-          .send({ message: "removeCurrentListener fail, token needed" });
-      } else {
-        playlist
-          .findOne({ where: { id: req.body.playlist_id } })
-          .then((list) => {
-            if (list) {
-              current
-                .destroy({
-                  where: { playList_id: list.id, user_id: decoded.userid },
-                })
-                .then(() =>
-                  res
-                    .status(201)
-                    .send({ message: "removeCurrentListener success" })
-                )
-                .catch(() =>
-                  res.status(500).send({
-                    message: "removeCurrentListener fail, server error",
+    let tokenString = req.get("authorization");
+    if (tokenString && tokenString.length === 71) {
+      let token = tokenString.substring(7);
+      jwt.verify(token, process.env.JWT_secret, (err, decoded) => {
+        if (err) {
+          res
+            .status(401)
+            .send({ message: "removeCurrentListener fail, token needed" });
+        } else {
+          playlist
+            .findOne({ where: { id: req.body.playlist_id } })
+            .then((list) => {
+              if (list) {
+                current
+                  .destroy({
+                    where: { playList_id: list.id, user_id: decoded.userid },
                   })
-                );
-            } else {
-              res.status(404).send({
-                message: "removeCurrentListener fail, invalid playlist_id",
-              });
-            }
-          });
-      }
-    });
+                  .then(() =>
+                    res
+                      .status(201)
+                      .send({ message: "removeCurrentListener success" })
+                  )
+                  .catch(() =>
+                    res.status(500).send({
+                      message: "removeCurrentListener fail, server error",
+                    })
+                  );
+              } else {
+                res.status(404).send({
+                  message: "removeCurrentListener fail, invalid playlist_id",
+                });
+              }
+            });
+        }
+      });
+    } else {
+      res
+        .status(400)
+        .send({ message: "removeCurrentListener fail, invalid token" });
+    }
   },
 };

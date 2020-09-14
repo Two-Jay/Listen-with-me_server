@@ -7,11 +7,6 @@ const jwt = require("jsonwebtoken");
 
 module.exports = {
   get: (req, res) => {
-    let token = req.get("authorization").substring(7);
-    jwt.verify(token, process.env.JWT_secret, async (err) => {
-      if (err) {
-        res.status(401).send({ message: "loading fail, need signin" });
-      } else {
         try {
           let data;
           let payload = [];
@@ -63,7 +58,5 @@ module.exports = {
           console.log(err);
           res.status(500).send({ message: "loading fail, server error" });
         }
-      }
-    });
   },
 };
