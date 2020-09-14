@@ -1,4 +1,4 @@
-let tokenExpireTime = process.env.NODE_ENV === "production" ? "1h" : "5m";
+let tokenExpireTime = process.env.NODE_ENV === "production" ? "1d" : "1h";
 // 개발환경에 따른 토큰 expiretime 설정
 
 const jwt = require("jsonwebtoken");
