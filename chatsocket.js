@@ -11,6 +11,7 @@ const botname = 'Bot';
 io.on('connection', (socket) => {
   socket.on('joinRoom', ({ playlist_id, user_nickname }) => {
     socket.join(playlist_id);
+    console.log(playlist_id, user_nickname);
     socket.emit(
       'message',
       formatMessage(botname, `어서오세요 ${user_nickname}님! :)`)
