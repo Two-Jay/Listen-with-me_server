@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 module.exports = {
   get: (req, res) => {
     let tokenString = req.get("authorization");
-    if (tokenString && tokenString.length === 71) {
+    if (tokenString && tokenString.length > 7) {
       let token = tokenString.substring(7);
       jwt.verify(token, process.env.JWT_secret, (err, decoded) => {
         if (err) {
@@ -31,11 +31,9 @@ module.exports = {
                     .send({ message: "likeStatus loading fail, server error" })
                 );
             } else {
-              res
-                .status(404)
-                .send({
-                  message: "likeStatus loading fail, playlist not found",
-                });
+              res.status(404).send({
+                message: "likeStatus loading fail, playlist not found",
+              });
             }
           });
         }

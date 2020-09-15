@@ -22,7 +22,7 @@ module.exports = {
   },
   post: (req, res) => {
     let tokenString = req.get("authorization");
-    if (tokenString && tokenString.length === 71) {
+    if (tokenString && tokenString.length > 7) {
       let token = tokenString.substring(7);
       jwt.verify(token, process.env.JWT_secret, (err, decoded) => {
         if (err) {
@@ -62,7 +62,7 @@ module.exports = {
   },
   delete: (req, res) => {
     let tokenString = req.get("authorization");
-    if (tokenString && tokenString.length === 71) {
+    if (tokenString && tokenString.length > 7) {
       let token = tokenString.substring(7);
       jwt.verify(token, process.env.JWT_secret, (err, decoded) => {
         if (err) {
