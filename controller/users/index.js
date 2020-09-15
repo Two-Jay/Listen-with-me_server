@@ -7,6 +7,7 @@ module.exports = {
   nicknameValidation: require('./validation/nickname'),
   emailValidation: require('./validation/email'),
   tokenValidation: require('./validation/token'),
+  passwordValidation: require('./validation/password'),
   // profile 내 정보 수집 및 수정 관련
   updateNickname: require('./profile/updateNickname'),
   updateprofileDesc: require('./profile/updateProfileDesc'),
