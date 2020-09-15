@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 module.exports = {
   patch: (req, res) => {
     let tokenString = req.get("authorization");
-    if (tokenString && tokenString.length === 71) {
+    if (tokenString && tokenString.length > 7) {
       let token = tokenString.substring(7);
       jwt.verify(token, process.env.JWT_secret, (err, decoded) => {
         if (err) {
@@ -27,11 +27,9 @@ module.exports = {
                         .send({ list_id: list.id, likeAmount: count })
                     )
                     .catch(() =>
-                      res
-                        .status(500)
-                        .send({
-                          message: "removeLikeStatus fail, server error",
-                        })
+                      res.status(500).send({
+                        message: "removeLikeStatus fail, server error",
+                      })
                     );
                 })
                 .catch(() =>
