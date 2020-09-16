@@ -1,16 +1,16 @@
-const rooms = require("../../models").Room;
-const audiences = require("../../models").AudienceUser;
-const acc = require("../../models").AccumulateAudience;
-const jwt = require("jsonwebtoken");
+const rooms = require('../../models').Room;
+const audiences = require('../../models').AudienceUser;
+const acc = require('../../models').AccumulateAudience;
+const jwt = require('jsonwebtoken');
 
 module.exports = {
   delete: (req, res) => {
-    let tokenString = req.get("authorization");
+    let tokenString = req.get('authorization');
     if (tokenString && tokenString.length === 71) {
       let token = tokenString.substring(7);
       jwt.verify(token, process.env.JWT_secret, (err) => {
         if (err) {
-          res.status(401).send({ message: "room destroy fail, need signin" });
+          res.status(401).send({ message: 'room destroy fail, need signin' });
         } else {
           rooms.findOne({ where: { id: req.query.id } }).then((room) => {
             if (room) {
@@ -23,23 +23,23 @@ module.exports = {
                   })
                 )
                 .then(() =>
-                  res.status(204).send({ message: "room destroy success" })
+                  res.status(204).send({ message: 'room destroy success' })
                 )
                 .catch(() =>
                   res
                     .status(500)
-                    .send({ message: "room destroy fail, server error" })
+                    .send({ message: 'room destroy fail, server error' })
                 );
             } else {
               res
                 .status(404)
-                .send({ message: "room destroy fail, room not found" });
+                .send({ message: 'room destroy fail, room not found' });
             }
           });
         }
       });
     } else {
-      res.status(400).send({ message: "room destroy fail, invalid token" });
+      res.status(400).send({ message: 'room destroy fail, invalid token' });
     }
   },
 };
