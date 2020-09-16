@@ -13,7 +13,15 @@ module.exports = {
         } else {
           music
             .findAll({ where: { playlist_id: req.query.id } })
-            .then((data) => res.status(200).send(data))
+            .then((data) => {
+              if (data) {
+                res.status(200).send(data);
+              } else {
+                res
+                  .status(404)
+                  .send({ message: "list data loading fail, no music exists" });
+              }
+            })
             .catch(() =>
               res
                 .status(500)
