@@ -6,27 +6,26 @@ module.exports = {
     let tokenString = req.get("authorization");
     if (tokenString && tokenString.length > 7) {
       let token = tokenString.substring(7);
-      jwt.verify(token, process.env.JWT_secret, (err, decoded) => {
+      jwt.verify(token, process.env.JWT_secret, async (err, decoded) => {
         if (err) {
           res
             .status(401)
             .send({ message: "description update fail, need signin" });
         } else {
-          users
-            .update(
+          try {
+            await users.update(
               { profileDescription: req.body.description },
               {
                 where: { id: decoded.userid },
               }
-            )
-            .then(() =>
-              res.status(200).send({ message: "description update success" })
-            )
-            .catch(() =>
-              res
-                .status(500)
-                .send({ message: "description update fail, server error" })
             );
+            res.status(200).send({ message: "description update success" });
+          } catch (err) {
+            console.log(err);
+            res
+              .status(500)
+              .send({ message: "description update fail, server error" });
+          }
         }
       });
     } else {

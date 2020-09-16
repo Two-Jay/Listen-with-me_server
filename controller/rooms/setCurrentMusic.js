@@ -6,36 +6,34 @@ module.exports = {
     let tokenString = req.get("authorization");
     if (tokenString && tokenString.length > 7) {
       let token = tokenString.substring(7);
-      jwt.verify(token, process.env.JWT_secret, (err) => {
+      jwt.verify(token, process.env.JWT_secret, async (err) => {
         if (err) {
           res
             .status(401)
             .send({ message: "setCurrentMusic fail, need signin" });
         } else {
-          rooms.findOne({ where: { id: req.query.id } }).then((room) => {
-            if (room) {
-              rooms
-                .update(
-                  { currentMusic_id: req.body.music_id },
-                  { where: { id: room.id } }
-                )
-                .then((data) =>
-                  res.status(205).send({
-                    room_id: data.id,
-                    currentMusic_id: data.currentMusic_id,
-                  })
-                )
-                .catch(() =>
-                  res
-                    .status(500)
-                    .send({ message: "setCurrentMusic fail, server error" })
-                );
-            } else {
+          let room = await rooms.findOne({ where: { id: req.query.id } });
+          if (room) {
+            try {
+              let data = await rooms.update(
+                { currentMusic_id: req.body.music_id },
+                { where: { id: room.id } }
+              );
+              res.status(205).send({
+                room_id: data.id,
+                currentMusic_id: data.currentMusic_id,
+              });
+            } catch (err) {
+              console.log(err);
               res
-                .status(404)
-                .send({ message: "setCurrentMusic fail, room not found" });
+                .status(500)
+                .send({ message: "setCurrentMusic fail, server error" });
             }
-          });
+          } else {
+            res
+              .status(404)
+              .send({ message: "setCurrentMusic fail, room not found" });
+          }
         }
       });
     } else {
