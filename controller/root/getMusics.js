@@ -5,28 +5,29 @@ module.exports = {
     let tokenString = req.get("authorization");
     if (tokenString && tokenString.length > 7) {
       let token = tokenString.substring(7);
-      jwt.verify(token, process.env.JWT_secret, (err) => {
+      jwt.verify(token, process.env.JWT_secret, async (err) => {
         if (err) {
           res
             .status(401)
             .send({ message: "list data loading fail, need signin" });
         } else {
-          music
-            .findAll({ where: { playlist_id: req.query.id } })
-            .then((data) => {
-              if (data) {
-                res.status(200).send(data);
-              } else {
-                res
-                  .status(404)
-                  .send({ message: "list data loading fail, no music exists" });
-              }
-            })
-            .catch(() =>
+          try {
+            let data = await music.findAll({
+              where: { playlist_id: req.query.id },
+            });
+            if (data) {
+              res.status(200).send(data);
+            } else {
               res
-                .status(500)
-                .send({ message: "list data loading fail, server error" })
-            );
+                .status(404)
+                .send({ message: "list data loading fail, no music exists" });
+            }
+          } catch (err) {
+            console.log(err);
+            res
+              .status(500)
+              .send({ message: "list data loading fail, server error" });
+          }
         }
       });
     } else {

@@ -5,30 +5,27 @@ module.exports = {
     let tokenString = req.get("authorization");
     if (tokenString && tokenString.length > 7) {
       let token = tokenString.substring(7);
-      jwt.verify(token, process.env.JWT_secret, (err) => {
+      jwt.verify(token, process.env.JWT_secret, async (err) => {
         if (err) {
           res
             .status(401)
             .send({ message: "removeListEntry fail, need signin" });
         } else {
-          music.findOne({ where: { id: req.query.id } }).then((entry) => {
-            if (entry) {
-              music
-                .destroy({ where: { id: entry.id } })
-                .then(() =>
-                  res.status(204).send({ message: "removeListEntry success" })
-                )
-                .catch(() =>
-                  res
-                    .status(500)
-                    .send({ message: "removeListEntry fail, server error" })
-                );
-            } else {
-              res
-                .status(404)
-                .send({ message: "removeListEntry fail, listEntry not found" });
+          let entry = await music.findOne({ where: { id: req.query.id } });
+          if (entry) {
+            try {
+              await music.destroy({ where: { id: entry.id } });
+              res.status(204).send({ message: "removeListEntry success" });
+            } catch (err) {
+              await res
+                .status(500)
+                .send({ message: "removeListEntry fail, server error" });
             }
-          });
+          } else {
+            res
+              .status(404)
+              .send({ message: "removeListEntry fail, listEntry not found" });
+          }
         }
       });
     } else {

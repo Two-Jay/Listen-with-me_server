@@ -2,7 +2,7 @@ const users = require("../../models").User;
 const crypto = require("crypto");
 
 module.exports = {
-  post: (req, res) => {
+  post: async (req, res) => {
     const { email, password, nickname } = req.body;
 
     if (email === null || email === "") {
@@ -23,22 +23,25 @@ module.exports = {
       .update(password + "quartette")
       .digest("hex");
 
-    users
-      .findOrCreate({
-        where: {
+    let user = await users.findOne({
+      where: {
+        email: email,
+      },
+    });
+    if (user) {
+      res.status(409).send({ message: "signup fail, already exist user" });
+    } else {
+      try {
+        await users.create({
           email: email,
-        },
-        defaults: {
           password: encryptedPassword,
           nickname: nickname,
-        },
-      })
-      .then(async ([user, created]) => {
-        if (!created) {
-          res.status(409).send({ message: "signup fail, already exist user" });
-          return;
-        }
+        });
         res.status(200).send({ message: "signup success" });
-      });
+      } catch (err) {
+        console.log(err);
+        res.status(500).send({ message: "signup fail, server error" });
+      }
+    }
   },
 };

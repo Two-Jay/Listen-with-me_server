@@ -6,7 +6,7 @@ const users = require("../../models").User;
 const crypto = require("crypto");
 
 module.exports = {
-  post: (req, res) => {
+  post: async (req, res) => {
     const { email, password } = req.body;
 
     let encryptedPassword = crypto
@@ -14,41 +14,39 @@ module.exports = {
       .update(password + "quartette")
       .digest("hex");
 
-    users
-      .findOne({
-        where: {
-          email: email,
-          password: encryptedPassword,
-        },
-      })
-      .then((result) => {
-        if (result) {
-          let token = jwt.sign(
-            {
-              userid: result.id,
-            },
-            process.env.JWT_secret,
-            {
-              expiresIn: tokenExpireTime,
-            }
-          );
-
-          res
-            .status(200)
-            .set('Access-Control-Expose-Headers', 'authorization')
-            .set('authorization', `Bearer ${token}`)
-            .send({
-              email: email,
-              nickname: result.nickname,
-              profileURL: result.profileURL,
-              profileDescription: result.profileDescription,
-            });
-        } else {
-          res.status(404).send({ message: "signin fail, invalid user data" });
-        }
-      })
-      .catch((err) => {
+    let result = await users.findOne({
+      where: {
+        email: email,
+        password: encryptedPassword,
+      },
+    });
+    if (result) {
+      try {
+        let token = jwt.sign(
+          {
+            userid: result.id,
+          },
+          process.env.JWT_secret,
+          {
+            expiresIn: tokenExpireTime,
+          }
+        );
+        res
+          .status(200)
+          .set("Access-Control-Expose-Headers", "authorization")
+          .set("authorization", `Bearer ${token}`)
+          .send({
+            email: email,
+            nickname: result.nickname,
+            profileURL: result.profileURL,
+            profileDescription: result.profileDescription,
+          });
+      } catch (err) {
+        console.log(err);
         res.status(500).send({ message: "signin fail, server error" });
-      });
+      }
+    } else {
+      res.status(404).send({ message: "signin fail, invalid user data" });
+    }
   },
 };

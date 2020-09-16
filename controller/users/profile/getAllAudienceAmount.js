@@ -26,6 +26,7 @@ module.exports = {
                   });
                   count = count + number;
                 } catch (err) {
+                  console.log(err);
                   res.status(500).send({
                     message: "getAllAudienceAmount fail, server error",
                   });
