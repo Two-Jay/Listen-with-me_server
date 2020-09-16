@@ -10,6 +10,7 @@ router.get('/signout', usersController.signout.get);
 router.get('/nickname', usersController.nicknameValidation.get);
 router.get('/email', usersController.emailValidation.get);
 router.get('/token', usersController.tokenValidation.get);
+router.get('/password', usersController.passwordValidation.get);
 
 router.patch('/profile/nickname', usersController.updateNickname.patch);
 router.patch('/profile/description', usersController.updateprofileDesc.patch);

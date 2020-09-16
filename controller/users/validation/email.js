@@ -13,12 +13,10 @@ module.exports = {
       })
       .then((result) => {
         if (result) {
-          res
-            .status(202)
-            .send({
-              conflict: true,
-              message: 'unavailable email, already exist email',
-            });
+          res.status(202).send({
+            conflict: true,
+            message: 'unavailable email, already exist email',
+          });
         } else {
           if (regexr.test(email)) {
             res
