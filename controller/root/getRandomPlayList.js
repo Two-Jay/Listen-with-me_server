@@ -27,7 +27,7 @@ module.exports = {
               }
               if (newList.length === 0) {
                 res
-                  .status(404)
+                  .status(400)
                   .send({ message: "random loading fail, no rooms opened" });
               } else {
                 let randIndex = Math.floor(Math.random() * newList.length);
