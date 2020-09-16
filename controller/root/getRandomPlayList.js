@@ -7,7 +7,7 @@ const sequelize = require("sequelize");
 module.exports = {
   get: (req, res) => {
     let tokenString = req.get("authorization");
-    if (tokenString && tokenString.length === 71) {
+    if (tokenString && tokenString.length > 7) {
       let token = tokenString.substring(7);
       jwt.verify(token, process.env.JWT_secret, (err) => {
         if (err) {
