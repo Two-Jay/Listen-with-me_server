@@ -14,21 +14,15 @@ router.get('/password', usersController.passwordValidation.get);
 
 router.patch('/profile/nickname', usersController.updateNickname.patch);
 router.patch('/profile/description', usersController.updateprofileDesc.patch);
-router.patch(
+router.post(
   '/profile/image',
   s3.upload.single('file'),
-  usersController.updateprofileImage.patch
+  usersController.updateprofileImage.post
 );
 
 router.get('/profile/audience', usersController.getAllAudienceAmount.get);
 router.get('/profile/like', usersController.getAllLikeAmount.get);
 
-router.get('./oauth/google', usersController.authgoogle.getAuth);
-router.get('./oauth/google/callback', usersController.authgoogle.authCallback);
-router.get('./oauth/google/logout', usersController.authgoogle.logout);
-
-router.get('./oauth/kakao', usersController.authkakao.getAuth);
-router.get('./oauth/kakao/callback', usersController.authkakao.authCallback);
-router.get('./oauth/kakao/logout', usersController.authgoogle.logout);
+router.post('./oauth/google', usersController.authgoogle.post);
 
 module.exports = router;

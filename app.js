@@ -22,6 +22,7 @@ const cors = require('cors');
 const whitelist = [
   'http://localhost:3000',
   'http://listen-with-me-test.s3-website.ap-northeast-2.amazonaws.com',
+  'https://s3.console.aws.amazon.com/s3/buckets/lwm-test/?region=ap-northeast-2',
 ];
 const corsOptions = {
   origin: (origin, callback) => {
@@ -33,7 +34,6 @@ const corsOptions = {
   },
   credentials: true,
 };
-
 
 // DB sync check
 const models = require('./models/index.js');
@@ -50,7 +50,7 @@ models.sequelize
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
- 
+
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
