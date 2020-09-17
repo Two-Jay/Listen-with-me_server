@@ -22,6 +22,7 @@ module.exports = {
                   where: { playlist_id: list[i]["id"] },
                 });
                 if (room) {
+                  list[i]["room_id"] = room.id;
                   newList.push(list[i]);
                 }
               }
@@ -43,6 +44,7 @@ module.exports = {
                 });
                 let payload = {
                   id: tempData.id,
+                  room_id: tempData.room_id,
                   thumbnails: musicData.thumbnails,
                   titie: tempData.title,
                   nickname: userData.nickname,
