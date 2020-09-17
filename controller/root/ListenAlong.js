@@ -23,7 +23,7 @@ module.exports = {
                     where: { playlist_id: list[i]["id"] },
                   });
                   if (room) {
-                    res.status(200).send({ id: room.playlist_id });
+                    res.status(200).send({ id: room.id });
                   }
                 }
                 res
