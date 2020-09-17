@@ -2,7 +2,7 @@ const users = require("../../../models").User;
 const jwt = require("jsonwebtoken");
 
 module.exports = {
-  patch: (req, res) => {
+  post: (req, res) => {
     let tokenString = req.get("authorization");
     if (tokenString && tokenString.length > 7) {
       let token = tokenString.substring(7);
