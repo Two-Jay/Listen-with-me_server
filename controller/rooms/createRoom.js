@@ -16,7 +16,10 @@ module.exports = {
           if (data) {
             res
               .status(409)
-              .send({ message: "createRoom fail, already exist room" });
+              .send({
+                message: "createRoom fail, already exist room",
+                room_id: data.id,
+              });
           } else {
             try {
               let room = await rooms.create({
