@@ -12,12 +12,14 @@ module.exports = {
             .status(401)
             .send({ message: "setCurrentMusic fail, need signin" });
         } else {
-          let room = await rooms.findOne({ where: { id: req.query.id } });
+          let room = await rooms.findOne({
+            where: { id: Number(req.query.id) },
+          });
           if (room) {
             try {
               let data = await rooms.update(
-                { currentMusic_id: req.body.music_id },
-                { where: { id: room.id } }
+                { currentMusic_id: Number(req.body.music_id) },
+                { where: { id: Number(room.id) } }
               );
               res.status(205).send({
                 room_id: data.id,
