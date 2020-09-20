@@ -21,7 +21,7 @@ module.exports = {
         where: {
           email: ticket.payload.email,
         },
-        default: {
+        defaults: {
           nickname: ticket.payload.name,
           profileURL: ticket.payload.picture,
           OauthType: "google",
