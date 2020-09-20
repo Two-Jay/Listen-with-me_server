@@ -41,7 +41,7 @@ module.exports = {
         }
       });
     } else {
-      res.status(400).send({ messsage: "removePlaylist fail, invalid token" });
+      res.status(403).send({ messsage: "removePlaylist fail, invalid token" });
     }
   },
 };

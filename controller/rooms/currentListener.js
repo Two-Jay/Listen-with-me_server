@@ -95,7 +95,7 @@ module.exports = {
       });
     } else {
       res
-        .status(400)
+        .status(403)
         .send({ message: "removeCurrentListener fail, invalid token" });
     }
   },

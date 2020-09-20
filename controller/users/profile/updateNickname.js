@@ -38,7 +38,7 @@ module.exports = {
         }
       });
     } else {
-      res.status(400).send({ message: "nickname update fail, invalid token" });
+      res.status(403).send({ message: "nickname update fail, invalid token" });
     }
   },
 };

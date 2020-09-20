@@ -27,7 +27,7 @@ module.exports = {
         }
       });
     } else {
-      res.status(400).send({ message: "image update fail, invalid token" });
+      res.status(403).send({ message: "image update fail, invalid token" });
     }
   },
 };

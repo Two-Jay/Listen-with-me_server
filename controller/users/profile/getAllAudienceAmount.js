@@ -43,7 +43,7 @@ module.exports = {
       });
     } else {
       res
-        .status(400)
+        .status(403)
         .send({ message: "getAllAudienceAmount fail, invalid token" });
     }
   },

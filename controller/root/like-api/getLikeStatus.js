@@ -38,7 +38,7 @@ module.exports = {
       });
     } else {
       res
-        .status(400)
+        .status(403)
         .send({ message: "likeStatus loading fail, invalid token" });
     }
   },

@@ -30,7 +30,7 @@ module.exports = {
       });
     } else {
       res
-        .status(400)
+        .status(403)
         .send({ message: "description update fail, invalid token" });
     }
   },
