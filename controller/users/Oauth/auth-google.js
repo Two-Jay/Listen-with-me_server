@@ -1,8 +1,8 @@
-const { OAuth2Client } = require('google-auth-library');
+const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(process.env.GOOGLE_client_id);
-const tokenExpireTime = process.env.NODE_ENV === 'production' ? '1d' : '1h';
-const jwt = require('jsonwebtoken');
-const users = require('../../../models').User;
+const tokenExpireTime = process.env.NODE_ENV === "production" ? "1d" : "1h";
+const jwt = require("jsonwebtoken");
+const users = require("../../../models").User;
 
 module.exports = {
   post: async (req, res) => {
@@ -12,7 +12,7 @@ module.exports = {
       audience: process.env.GOOGLE_client_id,
     });
     const payload = ticket.getPayload();
-    const userid = payload['sub'];
+    const userid = payload["sub"];
 
     console.log(ticket);
 
@@ -24,7 +24,7 @@ module.exports = {
         default: {
           nickname: ticket.payload.name,
           profileURL: ticket.payload.picture,
-          OauthType: 'google',
+          OauthType: "google",
         },
       })
       .then(async ([user, created]) => {
@@ -40,45 +40,47 @@ module.exports = {
         if (created) {
           res
             .status(201)
-            .set('Access-Control-Expose-Headers', 'authorization')
-            .set('authorization', `Bearer ${token}`)
+            .set("Access-Control-Expose-Headers", "authorization")
+            .set("authorization", `Bearer ${token}`)
             .send({
               user: {
+                id: user.id,
                 email: user.email,
                 nickname: user.nickname,
                 profileURL: user.profileURL,
                 profileDescription: user.profileDescription,
               },
               message:
-                'Google-auth-signin success, this is first approach to our client',
+                "Google-auth-signin success, this is first approach to our client",
             });
           return;
         }
         if (!created && token) {
           res
             .status(200)
-            .set('Access-Control-Expose-Headers', 'authorization')
-            .set('authorization', `Bearer ${token}`)
+            .set("Access-Control-Expose-Headers", "authorization")
+            .set("authorization", `Bearer ${token}`)
             .send({
               user: {
+                id: user.id,
                 email: user.email,
                 nickname: user.nickname,
                 profileURL: user.profileURL,
                 profileDescription: user.profileDescription,
               },
-              message: 'Google-auth-signin success, welcome back',
+              message: "Google-auth-signin success, welcome back",
             });
           return;
         }
         res
           .status(400)
-          .send({ message: 'Google-auth-signin fail, wrong approach' });
+          .send({ message: "Google-auth-signin fail, wrong approach" });
         return;
       })
       .catch((err) => {
         res
           .status(500)
-          .send({ message: 'Google-auth-signin fail, server error' });
+          .send({ message: "Google-auth-signin fail, server error" });
       });
     // TODO : Google oauth 구현
     // 클라이언트로 token 받음
