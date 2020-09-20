@@ -23,6 +23,7 @@ router.post(
 router.get("/profile/audience", usersController.getAllAudienceAmount.get);
 router.get("/profile/like", usersController.getAllLikeAmount.get);
 
-router.post("/oauth/google", usersController.authgoogle.post);
+router.post('./oauth/google', usersController.authgoogle.post);
+router.post('/oauth/google-signin', usersController.authgoogleSignin.post);
 
 module.exports = router;

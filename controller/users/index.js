@@ -16,5 +16,6 @@ module.exports = {
   getAllLikeAmount: require('./profile/getAllLikeAmount'),
   // social login 관련
   authgoogle: require('./Oauth/auth-google'),
+  authgoogleSignin: require('./Oauth/auth-google-signin'),
   authkakao: require('./Oauth/auth-kakao'),
 };
