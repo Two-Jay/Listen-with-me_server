@@ -36,7 +36,7 @@ module.exports = {
           .set("Access-Control-Expose-Headers", "authorization")
           .set("authorization", `Bearer ${token}`)
           .send({
-            email: email,
+            email: result.email,
             nickname: result.nickname,
             profileURL: result.profileURL,
             profileDescription: result.profileDescription,

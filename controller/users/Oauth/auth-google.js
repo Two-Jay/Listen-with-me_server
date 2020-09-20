@@ -1,6 +1,8 @@
-const { OAuth2Client } = require('google-auth-library');
+const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(process.env.GOOGLE_client_id);
+
 const users = require('../../../models').User;
+
 
 module.exports = {
   post: async (req, res) => {
@@ -10,7 +12,6 @@ module.exports = {
       audience: process.env.GOOGLE_client_id,
     });
     const payload = ticket.getPayload();
-
     users
       .create({
         email: ticket.payload.email,
@@ -40,7 +41,7 @@ module.exports = {
         console.log(err);
         res
           .status(500)
-          .send({ message: 'Google-auth-signin fail, server error' });
+          .send({ message: "Google-auth-signin fail, server error" });
       });
   },
 };

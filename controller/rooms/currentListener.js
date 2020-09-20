@@ -3,7 +3,7 @@ const playlist = require("../../models").PlayList;
 const jwt = require("jsonwebtoken");
 module.exports = {
   get: async (req, res) => {
-    let list = await playlist.findOne({ where: { id: req.body.playlist_id } });
+    let list = await playlist.findOne({ where: { id: req.query.id } });
     if (list) {
       try {
         let count = await current.count({ where: { playList_id: list.id } });
@@ -31,7 +31,7 @@ module.exports = {
             .send({ message: "addCurrentListener fail, need signin" });
         } else {
           let list = await playlist.findOne({
-            where: { id: req.body.playlist_id },
+            where: { id: req.query.id },
           });
           if (list) {
             try {
@@ -70,7 +70,7 @@ module.exports = {
             .send({ message: "removeCurrentListener fail, token needed" });
         } else {
           let list = await playlist.findOne({
-            where: { id: req.body.playlist_id },
+            where: { id: req.query.id },
           });
           if (list) {
             try {
@@ -95,7 +95,7 @@ module.exports = {
       });
     } else {
       res
-        .status(400)
+        .status(403)
         .send({ message: "removeCurrentListener fail, invalid token" });
     }
   },

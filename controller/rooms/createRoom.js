@@ -14,9 +14,10 @@ module.exports = {
             where: { playlist_id: req.body.playlist_id },
           });
           if (data) {
-            res
-              .status(409)
-              .send({ message: "createRoom fail, already exist room" });
+            res.status(409).send({
+              message: "createRoom fail, already exist room",
+              room_id: data.id,
+            });
           } else {
             try {
               let room = await rooms.create({
@@ -34,7 +35,7 @@ module.exports = {
         }
       });
     } else {
-      res.status(400).send({ message: "createRoom fail, invalid token" });
+      res.status(403).send({ message: "createRoom fail, invalid token" });
     }
   },
 };

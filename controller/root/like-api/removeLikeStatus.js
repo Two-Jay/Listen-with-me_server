@@ -35,7 +35,7 @@ module.exports = {
         }
       });
     } else {
-      res.status(400).send({ message: "removeLikeStatus fail, invalid token" });
+      res.status(403).send({ message: "removeLikeStatus fail, invalid token" });
     }
   },
 };

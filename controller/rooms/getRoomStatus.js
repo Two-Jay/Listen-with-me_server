@@ -28,7 +28,7 @@ module.exports = {
         }
       });
     } else {
-      res.status(400).send({ message: "getRoomStatus fail, invalid token" });
+      res.status(403).send({ message: "getRoomStatus fail, invalid token" });
     }
   },
 };

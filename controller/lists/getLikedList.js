@@ -55,7 +55,7 @@ module.exports = {
         }
       });
     } else {
-      res.status(400).send({ message: "getLikedList fail, invalid token" });
+      res.status(403).send({ message: "getLikedList fail, invalid token" });
     }
   },
 };
