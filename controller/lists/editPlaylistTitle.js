@@ -27,7 +27,7 @@ module.exports = {
       });
     } else {
       res
-        .status(400)
+        .status(403)
         .send({ message: "editPlaylistTitle fail, invalid token" });
     }
   },

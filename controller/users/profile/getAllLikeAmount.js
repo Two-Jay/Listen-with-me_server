@@ -40,7 +40,7 @@ module.exports = {
         }
       });
     } else {
-      res.status(400).send({ message: "getAllLikeAmount fail, invalid token" });
+      res.status(403).send({ message: "getAllLikeAmount fail, invalid token" });
     }
   },
 };

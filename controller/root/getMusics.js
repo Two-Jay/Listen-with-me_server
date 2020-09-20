@@ -32,7 +32,7 @@ module.exports = {
       });
     } else {
       res
-        .status(400)
+        .status(403)
         .send({ message: "list data loading fail, invalid token" });
     }
   },

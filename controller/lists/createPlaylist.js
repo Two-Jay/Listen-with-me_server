@@ -32,7 +32,7 @@ module.exports = {
         }
       });
     } else {
-      res.status(400).send({ message: "createRoom fail, invalid token" });
+      res.status(403).send({ message: "createRoom fail, invalid token" });
     }
   },
 };

@@ -17,7 +17,7 @@ module.exports = {
         }
       });
     } else {
-      res.status(400).send({ message: "signout fail, invalid token" });
+      res.status(403).send({ message: "signout fail, invalid token" });
     }
   },
 };
