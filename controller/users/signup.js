@@ -36,6 +36,7 @@ module.exports = {
           email: email,
           password: encryptedPassword,
           nickname: nickname,
+          OauthType: 0,
         });
         res.status(200).send({ message: "signup success" });
       } catch (err) {

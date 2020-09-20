@@ -18,6 +18,7 @@ module.exports = {
       where: {
         email: email,
         password: encryptedPassword,
+        OauthType: 0,
       },
     });
     if (result) {
