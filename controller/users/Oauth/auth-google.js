@@ -44,7 +44,6 @@ module.exports = {
             .set("authorization", `Bearer ${token}`)
             .send({
               user: {
-                id: user.id,
                 email: user.email,
                 nickname: user.nickname,
                 profileURL: user.profileURL,
@@ -62,7 +61,6 @@ module.exports = {
             .set("authorization", `Bearer ${token}`)
             .send({
               user: {
-                id: user.id,
                 email: user.email,
                 nickname: user.nickname,
                 profileURL: user.profileURL,

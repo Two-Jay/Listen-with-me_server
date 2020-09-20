@@ -20,7 +20,6 @@ module.exports = {
           let user = await users.findOne({ where: { id: decoded.userid } });
           if (user) {
             res.status(200).send({
-              id: user.id,
               email: user.email,
               nickname: user.nickname,
               profileURL: user.profileURL,
