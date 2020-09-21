@@ -22,8 +22,6 @@ module.exports = {
       },
       profileURL: {
         type: Sequelize.STRING,
-        defaultValue:
-          "https://lwm-test.s3.ap-northeast-2.amazonaws.com/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%2C+2020-09-07+13-20-34.png",
       },
       profileDescription: {
         type: Sequelize.STRING,

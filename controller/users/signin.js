@@ -39,7 +39,7 @@ module.exports = {
           .send({
             email: result.email,
             nickname: result.nickname,
-            profileURL: result.profileURL,
+            profileURL: result.profileURL === null ? null : result.profileURL,
             profileDescription: result.profileDescription,
           });
       } catch (err) {
