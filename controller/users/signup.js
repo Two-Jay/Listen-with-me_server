@@ -38,7 +38,7 @@ module.exports = {
           nickname: nickname,
           OauthType: 0,
         });
-        res.status(200).send({ message: "signup success" });
+        res.status(201).send({ message: "signup success" });
       } catch (err) {
         console.log(err);
         res.status(500).send({ message: "signup fail, server error" });
