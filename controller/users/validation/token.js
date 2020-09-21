@@ -22,7 +22,7 @@ module.exports = {
             res.status(200).send({
               email: user.email,
               nickname: user.nickname,
-              profileURL: user.profileURL,
+              profileURL: user.profileURL === null ? null : user.profileURL,
               profileDescription: user.profileDescription,
             });
           } else {
